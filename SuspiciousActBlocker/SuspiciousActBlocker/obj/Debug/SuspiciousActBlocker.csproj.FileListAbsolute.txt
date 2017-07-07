@@ -6,3 +6,10 @@ C:\misc\Repos\SuspiciousBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\De
 C:\misc\Repos\SuspiciousBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.csproj.GenerateResource.Cache
 C:\misc\Repos\SuspiciousBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.exe
 C:\misc\Repos\SuspiciousBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.pdb
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\bin\Debug\SuspiciousActBlocker.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\bin\Debug\SuspiciousActBlocker.pdb
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.Form1.resources
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.Properties.Resources.resources
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.csproj.GenerateResource.Cache
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.pdb

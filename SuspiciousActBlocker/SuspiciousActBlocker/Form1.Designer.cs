@@ -38,6 +38,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,7 +87,7 @@
             // 
             this.button2.Location = new System.Drawing.Point(227, 451);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(259, 23);
+            this.button2.Size = new System.Drawing.Size(242, 23);
             this.button2.TabIndex = 4;
             this.button2.Text = "%company% remote support";
             this.button2.UseVisualStyleBackColor = true;
@@ -117,20 +118,30 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(117, 425);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(369, 20);
+            this.textBox1.Size = new System.Drawing.Size(497, 20);
             this.textBox1.TabIndex = 7;
             this.textBox1.UseSystemPasswordChar = true;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(492, 423);
+            this.button4.Location = new System.Drawing.Point(620, 424);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(120, 23);
             this.button4.TabIndex = 8;
-            this.button4.Text = "Confirm";
+            this.button4.Text = "Continue Anyway";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Visible = false;
+            // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(475, 451);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(191, 23);
+            this.button5.TabIndex = 9;
+            this.button5.Text = "Create Ticket";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Visible = false;
             // 
             // Form1
             // 
@@ -138,6 +149,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(750, 486);
             this.ControlBox = false;
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label3);
@@ -169,6 +181,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button5;
     }
 }
 

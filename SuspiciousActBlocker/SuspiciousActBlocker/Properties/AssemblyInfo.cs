@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("SuspiciousActBlocker")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Great Lakes Dredge and Dock")]
+[assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SuspiciousActBlocker")]
-[assembly: AssemblyCopyright("Copyright © Great Lakes Dredge and Dock 2017")]
+[assembly: AssemblyCopyright("")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

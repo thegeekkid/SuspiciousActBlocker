@@ -1,0 +1,8 @@
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\bin\Release\SuspiciousActBlocker.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\bin\Release\SuspiciousActBlocker.pdb
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Release\SuspiciousActBlocker.csprojResolveAssemblyReference.cache
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Release\SuspiciousActBlocker.Form1.resources
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Release\SuspiciousActBlocker.Properties.Resources.resources
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Release\SuspiciousActBlocker.csproj.GenerateResource.Cache
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Release\SuspiciousActBlocker.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Release\SuspiciousActBlocker.pdb

@@ -38,7 +38,7 @@ namespace SuspiciousActBlocker
 
         private void load_settings()
         {
-            
+            Registry.LocalMachine.GetValue(@"SOFTWARE\Semrau Software Consulting\Suspicious");
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

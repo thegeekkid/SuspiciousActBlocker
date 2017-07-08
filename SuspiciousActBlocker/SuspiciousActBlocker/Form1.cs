@@ -21,7 +21,6 @@ namespace SuspiciousActBlocker
         private void Form1_Load(object sender, EventArgs e)
         {
             vars.target_name = Process.GetCurrentProcess().MainModule.FileName;
-            MessageBox.Show(vars.target_name);
             load_settings();
             if (vars.logo != "")
             {
@@ -38,7 +37,18 @@ namespace SuspiciousActBlocker
 
         private void load_settings()
         {
-            Registry.LocalMachine.GetValue(@"SOFTWARE\Semrau Software Consulting\SuspiciousActBlocker\");
+            vars.install_location = get_setting("install_location");
+            vars.company = get_setting("company");
+            vars.logo = get_setting("logo");
+            vars.contactInfo = get_setting("contactInfo").Replace(@"\n", Environment.NewLine);
+            vars.website = get_setting("website");
+            vars.remoteSite = get_setting("remote_site");
+            vars.passHash = get_setting("passHash");
+        }
+
+        private string get_setting(string name)
+        {
+            return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

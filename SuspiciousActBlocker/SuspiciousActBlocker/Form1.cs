@@ -29,8 +29,8 @@ namespace SuspiciousActBlocker
                 if (vars.logo != "")
                 {
                     if (File.Exists(vars.install_location + vars.logo)) {
-                        label1.Location = new Point(218, 219);
-                        label2.Location = new Point(9, 284);
+                        //label1.Location = new Point(218, 219);
+                        label2.Location = new Point(9, 253);
                         pictureBox1.Image = Image.FromFile(vars.install_location + vars.logo);
                     }
                 }

@@ -56,7 +56,7 @@
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.Red;
-            this.label1.Location = new System.Drawing.Point(211, -2);
+            this.label1.Location = new System.Drawing.Point(217, -2);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(305, 55);
             this.label1.TabIndex = 1;
@@ -68,7 +68,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(9, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(731, 100);
+            this.label2.Size = new System.Drawing.Size(731, 120);
             this.label2.TabIndex = 2;
             this.label2.Text = resources.GetString("label2.Text");
             // 
@@ -96,12 +96,13 @@
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
             this.button3.Location = new System.Drawing.Point(672, 451);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(68, 23);
             this.button3.TabIndex = 5;
             this.button3.Text = "Ok";
-            this.button3.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
@@ -125,22 +126,25 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(620, 424);
+            this.button4.BackColor = System.Drawing.Color.Red;
+            this.button4.ForeColor = System.Drawing.Color.White;
+            this.button4.Location = new System.Drawing.Point(620, 425);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(120, 23);
+            this.button4.Size = new System.Drawing.Size(120, 22);
             this.button4.TabIndex = 8;
             this.button4.Text = "Continue Anyway";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button4.UseVisualStyleBackColor = false;
             this.button4.Visible = false;
             // 
             // button5
             // 
+            this.button5.BackColor = System.Drawing.Color.Lime;
             this.button5.Location = new System.Drawing.Point(475, 451);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(191, 23);
             this.button5.TabIndex = 9;
-            this.button5.Text = "Create Ticket";
-            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Text = "Lockdown all remote sessions";
+            this.button5.UseVisualStyleBackColor = false;
             this.button5.Visible = false;
             // 
             // Form1

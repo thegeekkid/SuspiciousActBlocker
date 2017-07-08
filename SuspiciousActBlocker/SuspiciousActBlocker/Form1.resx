@@ -119,7 +119,8 @@
   </resheader>
   <data name="label2.Text" xml:space="preserve">
     <value>This program is commonly used by telephone scammers in order to trick people into giving them money.
-If you were called out of the blue, then this is most likely a scam, please hang up and call us.
+If you were called out of the blue, then this is most likely a scam - please hang up and call us.
+If you are already connected to them, please click the "Lockdown all remote sessions" button.
 This computer is managed by %company%, they have the password to bypass this message.
 For assistance, please contact:
 %contactInfo%</value>

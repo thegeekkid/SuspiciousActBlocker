@@ -65,22 +65,21 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.label2.Location = new System.Drawing.Point(9, 53);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(731, 120);
+            this.label2.Size = new System.Drawing.Size(661, 102);
             this.label2.TabIndex = 2;
             this.label2.Text = resources.GetString("label2.Text");
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(209, 451);
+            this.button1.Location = new System.Drawing.Point(181, 451);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(209, 23);
+            this.button1.Size = new System.Drawing.Size(237, 23);
             this.button1.TabIndex = 3;
             this.button1.Text = "%company% Website";
             this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
@@ -91,7 +90,6 @@
             this.button2.TabIndex = 4;
             this.button2.Text = "%company% remote support";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Visible = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
@@ -103,7 +101,6 @@
             this.button3.TabIndex = 5;
             this.button3.Text = "Ok";
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Visible = false;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // label3
@@ -128,7 +125,7 @@
             // 
             this.button4.BackColor = System.Drawing.Color.Red;
             this.button4.ForeColor = System.Drawing.Color.White;
-            this.button4.Location = new System.Drawing.Point(620, 425);
+            this.button4.Location = new System.Drawing.Point(620, 423);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(120, 22);
             this.button4.TabIndex = 8;
@@ -141,11 +138,10 @@
             this.button5.BackColor = System.Drawing.Color.Lime;
             this.button5.Location = new System.Drawing.Point(12, 451);
             this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(191, 23);
+            this.button5.Size = new System.Drawing.Size(163, 23);
             this.button5.TabIndex = 9;
-            this.button5.Text = "Lockdown all remote sessions";
+            this.button5.Text = "Lockdown remote sessions";
             this.button5.UseVisualStyleBackColor = false;
-            this.button5.Visible = false;
             // 
             // Form1
             // 

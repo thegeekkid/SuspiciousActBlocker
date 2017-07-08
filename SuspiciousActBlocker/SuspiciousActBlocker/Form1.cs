@@ -22,6 +22,15 @@ namespace SuspiciousActBlocker
         private void Form1_Load(object sender, EventArgs e)
         {
             vars.target_name = Process.GetCurrentProcess().MainModule.FileName;
+            vars.args = "";
+            foreach (string arg in Environment.GetCommandLineArgs())
+            {
+                if (vars.args != "")
+                {
+                    vars.args += " ";
+                }
+                vars.args += arg;
+            }
             load_settings();
 
             if (vars.install_type == "msp")
@@ -106,6 +115,9 @@ namespace SuspiciousActBlocker
             if (textBox1.Text.Count() > 0)
             {
                 button4.Visible = true;
+            }else
+            {
+                button4.Visible = false;
             }
         }
 
@@ -123,6 +135,56 @@ namespace SuspiciousActBlocker
         {
             this.Close();
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            if (vars.passHash == "")
+            {
+                openAnyway();
+            }else
+            {
+                if (sha256(get_setting("salt") + textBox1.Text) == vars.passHash)
+                {
+                    openAnyway();
+                }else
+                {
+                    MessageBox.Show("Incorrect password.");
+                    textBox1.Text = "";
+                    button4.Visible = false;
+                }
+            }
+            
+        }
+
+        private void openAnyway()
+        {
+            string protected_name = get_setting(vars.target_name);
+            //DirectoryInfo dirinfo = new DirectoryInfo(protected_name);
+            File.Copy(protected_name, protected_name.Replace(".log", ".exe"));
+            Process proc = new Process();
+            proc.StartInfo.FileName = protected_name.Replace(".log", ".exe");
+            if (vars.args != "")
+            {
+                proc.StartInfo.Arguments = vars.args;
+            }
+            proc.Start();
+            this.Visible = false;
+            proc.WaitForExit();
+            File.Delete(protected_name.Replace(".log", ".exe"));
+            this.Close();
+        }
+
+        static string sha256(string input)
+        {
+            System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
+            System.Text.StringBuilder hash = new System.Text.StringBuilder();
+            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input), 0, Encoding.UTF8.GetByteCount(input));
+            foreach (byte theByte in crypto)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+            return hash.ToString();
+        }
     }
 
     public class vars
@@ -137,5 +199,6 @@ namespace SuspiciousActBlocker
         public static string passHash { get; set; }
         public static string lockdown_enabled { get; set; }
         public static string target_name { get; set; }
+        public static string args { get; set; }
     }
 }

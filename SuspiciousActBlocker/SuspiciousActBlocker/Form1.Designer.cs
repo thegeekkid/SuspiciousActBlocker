@@ -132,6 +132,7 @@
             this.button4.Text = "Continue Anyway";
             this.button4.UseVisualStyleBackColor = false;
             this.button4.Visible = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button5
             // 

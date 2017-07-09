@@ -183,12 +183,56 @@ namespace ScamBlockSetup
             try
             {
                 textBox6.Text = @"C:\Program Files\Semrau Software Consulting\Scam Block\";
+
+                if (File.Exists(Environment.CurrentDirectory + @"\silent.xml"))
+                {
+                    set = LoadXML(Environment.CurrentDirectory + @"\silent.xml");
+                    this.Visible = false;
+                    if (set.install_type == "msp")
+                    {
+                        radioButton1.Checked = false;
+                        radioButton2.Checked = true;
+                    }
+                    textBox6.Text = set.install_dir;
+                    textBox2.Text = set.company;
+                    textBox3.Text = set.website;
+                    richTextBox2.Text = set.contactInfo;
+                    textBox1.Text = set.supportUrl;
+                    if (set.passHash != "")
+                    {
+                        textBox4.Text = "|||***|||";
+                    }
+                    checkBox1.Checked = bool.Parse(set.lockout_enabled);
+                    if ((set.logo != "") && (File.Exists(Environment.CurrentDirectory + @"\" + set.logo))) {
+                        textBox5.Text = Environment.CurrentDirectory + @"\" + set.logo;
+                    }
+                    checkBox2.Checked = set.syskey;
+                    checkBox3.Checked = set.eventView;
+                    checkBox4.Checked = set.MMC;
+                    checkBox5.Checked = set.regedit;
+                    checkBox6.Checked = set.msconfig;
+                    checkBox8.Checked = set.cmd;
+                    checkBox9.Checked = set.prm;
+                    checkBox10.Checked = set.notepad;
+
+                    do_install();
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
             
+        }
+
+        public static settings LoadXML(string FileName)
+        {
+            using (var stream = System.IO.File.OpenRead(FileName))
+            {
+                var serializer = new System.Xml.Serialization.XmlSerializer(typeof(settings));
+                return serializer.Deserialize(stream) as settings;
+            }
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -392,12 +436,23 @@ namespace ScamBlockSetup
 
                 if (textBox4.Text != "")
                 {
+                    if (textBox4.Text == "|||***|||")
+                    {
 
-                    string salt = get_salt();
-                    set_setting("passHash", sha256(salt + textBox4.Text));
-                    set_setting("s", salt);
-                    set.s = salt;
-                    set.passHash = sha256(salt + textBox4.Text);
+                        set_setting("passHash", set.passHash);
+                        set_setting("s", set.s);
+                        
+                    }
+                    else
+                    {
+                        string salt = get_salt();
+                        set_setting("passHash", sha256(salt + textBox4.Text));
+                        set_setting("s", salt);
+                        set.s = salt;
+                        set.passHash = sha256(salt + textBox4.Text);
+                    }
+
+                    
                 }
                 else
                 {

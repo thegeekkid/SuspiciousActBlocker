@@ -25,11 +25,15 @@ namespace SuspiciousActBlocker
             vars.args = "";
             foreach (string arg in Environment.GetCommandLineArgs())
             {
-                if (vars.args != "")
+                if (arg != vars.target_name)
                 {
-                    vars.args += " ";
+                    if (vars.args != "")
+                    {
+                        vars.args += " ";
+                    }
+                    vars.args += arg;
                 }
-                vars.args += arg;
+                
             }
             load_settings();
 
@@ -158,19 +162,40 @@ namespace SuspiciousActBlocker
 
         private void openAnyway()
         {
-            string protected_name = get_setting(vars.target_name);
+            /*string protected_name = get_setting(vars.target_name);
             //DirectoryInfo dirinfo = new DirectoryInfo(protected_name);
-            File.Copy(protected_name, protected_name.Replace(".log", ".exe"));
+            //File.Copy(protected_name, protected_name.Replace(".log", ".exe"));
             Process proc = new Process();
-            proc.StartInfo.FileName = protected_name.Replace(".log", ".exe");
+            proc.StartInfo.FileName = protected_name; //.Replace(".log", ".exe");
             if (vars.args != "")
             {
                 proc.StartInfo.Arguments = vars.args;
             }
             proc.Start();
-            this.Visible = false;
-            proc.WaitForExit();
-            File.Delete(protected_name.Replace(".log", ".exe"));
+            //this.Visible = false;
+            //proc.WaitForExit();
+            //File.Delete(protected_name.Replace(".log", ".exe"));
+            this.Close();*/
+
+            Process proc = new Process();
+            proc.StartInfo.FileName = vars.install_location + @"executor.exe";
+            string pw = "";
+            if (textBox1.Text == "")
+            {
+                pw = "na";
+            }else
+            {
+                pw = textBox1.Text;
+            }
+            proc.StartInfo.Arguments = @"""" + pw + @""" """ + vars.target_name + @"""";
+            if (vars.args != "")
+            {
+                proc.StartInfo.Arguments += @" """ + vars.args + @"""";
+            }
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.CreateNoWindow = true;
+            //MessageBox.Show(proc.StartInfo.Arguments);
+            proc.Start();
             this.Close();
         }
 

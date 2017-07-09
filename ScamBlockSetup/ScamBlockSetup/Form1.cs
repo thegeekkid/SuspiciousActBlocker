@@ -389,6 +389,7 @@ namespace ScamBlockSetup
                 stat = "Downloading components";
                 WebClient wc = new WebClient();
                 wc.DownloadFile(@"https://downloads.semrauconsulting.com/ScamBlock/SuspiciousActBlocker.exe", textBox6.Text + @"SuspiciousActBlocker.exe");
+                wc.DownloadFile(@"https://downloads.semrauconsulting.com/ScamBlock/executor.exe", textBox6.Text + @"executor.exe");
                 // Progress 2
                 progress++;
 
@@ -590,10 +591,6 @@ namespace ScamBlockSetup
         {
             try
             {
-                string name = get_name();
-                DirectoryInfo dirinfo = new DirectoryInfo(file);
-                File.Copy(file, file.Replace(dirinfo.Name, name + ".log"));
-                set_setting(file, file.Replace(dirinfo.Name, name + ".log"));
                 Process proc = new Process();
                 proc.StartInfo.FileName = @"C:\Windows\System32\takeown.exe";
                 proc.StartInfo.Arguments = @"/f " + file;
@@ -606,7 +603,6 @@ namespace ScamBlockSetup
                 string err = proc.StandardError.ReadToEnd();
                 if (err != "")
                 {
-                    MessageBox.Show("First");
                     MessageBox.Show(err);
                 }
                 proc = new Process();
@@ -623,6 +619,11 @@ namespace ScamBlockSetup
                 {
                     MessageBox.Show(err);
                 }
+                string name = get_name();
+                DirectoryInfo dirinfo = new DirectoryInfo(file);
+                File.Copy(file, file.Replace(dirinfo.Name, name + ".log"));
+                set_setting(file, file.Replace(dirinfo.Name, name + ".log"));
+                
                 File.Delete(file);
                 File.Copy(textBox6.Text + "SuspiciousActBlocker.exe", file);
             }

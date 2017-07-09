@@ -13,4 +13,3 @@ C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBloc
 C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.csproj.GenerateResource.Cache
 C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.exe
 C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.pdb
-C:\Users\Brian\Repos\SuspiciousActBlocker\SuspiciousActBlocker\SuspiciousActBlocker\obj\Debug\SuspiciousActBlocker.csprojResolveAssemblyReference.cache

@@ -1,2 +1,3 @@
-ScamBlockSetup/ScamBlockSetup/bin
-SuspiciousActBlocker/SuspiciousActBlocker/bin
+ScamBlockSetup/ScamBlockSetup/bin/*
+SuspiciousActBlocker/SuspiciousActBlocker/bin/*
+executor/executor/bin/*

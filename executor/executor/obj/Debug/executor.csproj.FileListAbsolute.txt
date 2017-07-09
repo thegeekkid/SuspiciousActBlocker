@@ -1,0 +1,5 @@
+C:\Users\Brian\Repos\SuspiciousActBlocker\executor\executor\bin\Debug\executor.exe.config
+C:\Users\Brian\Repos\SuspiciousActBlocker\executor\executor\bin\Debug\executor.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\executor\executor\bin\Debug\executor.pdb
+C:\Users\Brian\Repos\SuspiciousActBlocker\executor\executor\obj\Debug\executor.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\executor\executor\obj\Debug\executor.pdb

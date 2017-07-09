@@ -90,7 +90,6 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label13 = new System.Windows.Forms.Label();
             this.button15 = new System.Windows.Forms.Button();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.welcome.SuspendLayout();
             this.install_type.SuspendLayout();
             this.branding.SuspendLayout();
@@ -722,25 +721,17 @@
             this.button15.Visible = false;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
-            // saveFileDialog1
-            // 
-            this.saveFileDialog1.AddExtension = false;
-            this.saveFileDialog1.DefaultExt = "xml";
-            this.saveFileDialog1.FileName = "silent.xml";
-            this.saveFileDialog1.SupportMultiDottedExtensions = true;
-            this.saveFileDialog1.Title = "Save as silent.xml";
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 612);
-            this.Controls.Add(this.branding);
-            this.Controls.Add(this.welcome);
-            this.Controls.Add(this.install_type);
             this.Controls.Add(this.status);
             this.Controls.Add(this.install_dir);
             this.Controls.Add(this.protected_items);
+            this.Controls.Add(this.branding);
+            this.Controls.Add(this.welcome);
+            this.Controls.Add(this.install_type);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -828,7 +819,6 @@
         private System.Windows.Forms.Panel xml_export;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

@@ -789,18 +789,16 @@ namespace ScamBlockSetup
 
         private void button13_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(@"In the next screen you will select where to save the XML. Note, this XML *MUST* have the name ""silent.xml"" and it *MUST* be in the same directory that the installer is executing from to work properly.  If you have a logo that you specified, that must also be in the same folder.");
-            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                using (var writer = new StreamWriter(saveFileDialog1.FileName))
+            
+                using (var writer = new StreamWriter(Environment.CurrentDirectory + @"\silent.xml"))
                 {
                     var serializer = new System.Xml.Serialization.XmlSerializer(set.GetType());
                     serializer.Serialize(writer, set);
                     writer.Flush();
                 }
 
-            }
+            MessageBox.Show(@"The xml has been placed in the same directory as this setup executable.  To run the installer silently, keep the xml named ""silent.xml"" and make sure it is in the same directory as the setup executable when you run it.  If you specified a logo, that must also be in the same directory as the setup executable.");
+
         }
     }
 }

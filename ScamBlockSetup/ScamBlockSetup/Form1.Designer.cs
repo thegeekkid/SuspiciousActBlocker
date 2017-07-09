@@ -63,7 +63,6 @@
             this.button6 = new System.Windows.Forms.Button();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.protected_items = new System.Windows.Forms.Panel();
-            this.checkBox11 = new System.Windows.Forms.CheckBox();
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.checkBox8 = new System.Windows.Forms.CheckBox();
@@ -306,6 +305,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(641, 20);
             this.textBox4.TabIndex = 17;
+            this.textBox4.UseSystemPasswordChar = true;
             // 
             // textBox3
             // 
@@ -432,7 +432,6 @@
             // protected_items
             // 
             this.protected_items.BackColor = System.Drawing.Color.White;
-            this.protected_items.Controls.Add(this.checkBox11);
             this.protected_items.Controls.Add(this.checkBox10);
             this.protected_items.Controls.Add(this.checkBox9);
             this.protected_items.Controls.Add(this.checkBox8);
@@ -451,22 +450,10 @@
             this.protected_items.TabIndex = 8;
             this.protected_items.Visible = false;
             // 
-            // checkBox11
-            // 
-            this.checkBox11.AutoSize = true;
-            this.checkBox11.Checked = true;
-            this.checkBox11.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox11.Location = new System.Drawing.Point(130, 99);
-            this.checkBox11.Name = "checkBox11";
-            this.checkBox11.Size = new System.Drawing.Size(55, 17);
-            this.checkBox11.TabIndex = 15;
-            this.checkBox11.Text = "gpedit";
-            this.checkBox11.UseVisualStyleBackColor = true;
-            // 
             // checkBox10
             // 
             this.checkBox10.AutoSize = true;
-            this.checkBox10.Location = new System.Drawing.Point(130, 145);
+            this.checkBox10.Location = new System.Drawing.Point(130, 122);
             this.checkBox10.Name = "checkBox10";
             this.checkBox10.Size = new System.Drawing.Size(65, 17);
             this.checkBox10.TabIndex = 14;
@@ -476,7 +463,7 @@
             // checkBox9
             // 
             this.checkBox9.AutoSize = true;
-            this.checkBox9.Location = new System.Drawing.Point(130, 122);
+            this.checkBox9.Location = new System.Drawing.Point(130, 101);
             this.checkBox9.Name = "checkBox9";
             this.checkBox9.Size = new System.Drawing.Size(199, 17);
             this.checkBox9.TabIndex = 13;
@@ -814,7 +801,6 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Panel protected_items;
-        private System.Windows.Forms.CheckBox checkBox11;
         private System.Windows.Forms.CheckBox checkBox10;
         private System.Windows.Forms.CheckBox checkBox9;
         private System.Windows.Forms.CheckBox checkBox8;

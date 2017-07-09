@@ -143,7 +143,7 @@ namespace SuspiciousActBlocker
                 openAnyway();
             }else
             {
-                if (sha256(get_setting("salt") + textBox1.Text) == vars.passHash)
+                if (sha256(get_setting("s") + textBox1.Text) == vars.passHash)
                 {
                     openAnyway();
                 }else

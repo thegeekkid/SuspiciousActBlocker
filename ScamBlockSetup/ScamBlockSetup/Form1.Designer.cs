@@ -30,17 +30,17 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.welcome = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.install_type = new System.Windows.Forms.Panel();
+            this.radioButton2 = new System.Windows.Forms.RadioButton();
+            this.radioButton1 = new System.Windows.Forms.RadioButton();
+            this.label3 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.branding = new System.Windows.Forms.Panel();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
@@ -75,21 +75,22 @@
             this.button9 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.install_dir = new System.Windows.Forms.Panel();
+            this.button12 = new System.Windows.Forms.Button();
+            this.textBox6 = new System.Windows.Forms.TextBox();
             this.label12 = new System.Windows.Forms.Label();
             this.button8 = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
-            this.textBox6 = new System.Windows.Forms.TextBox();
-            this.button12 = new System.Windows.Forms.Button();
             this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
             this.status = new System.Windows.Forms.Panel();
+            this.xml_export = new System.Windows.Forms.Panel();
+            this.label15 = new System.Windows.Forms.Label();
+            this.button13 = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
+            this.statustxt = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.label13 = new System.Windows.Forms.Label();
             this.button15 = new System.Windows.Forms.Button();
-            this.progressBar1 = new System.Windows.Forms.ProgressBar();
-            this.statustxt = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.xml_export = new System.Windows.Forms.Panel();
-            this.button13 = new System.Windows.Forms.Button();
-            this.label15 = new System.Windows.Forms.Label();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.welcome.SuspendLayout();
             this.install_type.SuspendLayout();
             this.branding.SuspendLayout();
@@ -113,33 +114,15 @@
             this.welcome.Size = new System.Drawing.Size(1024, 616);
             this.welcome.TabIndex = 0;
             // 
-            // label1
+            // button2
             // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(13, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(985, 60);
-            this.label1.TabIndex = 0;
-            this.label1.Text = resources.GetString("label1.Text");
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(17, 77);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(234, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "By clicking next, you agree to the license below:";
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Location = new System.Drawing.Point(12, 94);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.ReadOnly = true;
-            this.richTextBox1.Size = new System.Drawing.Size(997, 476);
-            this.richTextBox1.TabIndex = 2;
-            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            this.button2.Location = new System.Drawing.Point(12, 577);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(126, 23);
+            this.button2.TabIndex = 4;
+            this.button2.Text = "I do not agree - cancel";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button1
             // 
@@ -151,15 +134,33 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button2
+            // richTextBox1
             // 
-            this.button2.Location = new System.Drawing.Point(12, 577);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(126, 23);
-            this.button2.TabIndex = 4;
-            this.button2.Text = "I do not agree - cancel";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 94);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.ReadOnly = true;
+            this.richTextBox1.Size = new System.Drawing.Size(997, 476);
+            this.richTextBox1.TabIndex = 2;
+            this.richTextBox1.Text = resources.GetString("richTextBox1.Text");
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(17, 77);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(234, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "By clicking next, you agree to the license below:";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.Location = new System.Drawing.Point(13, 13);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(985, 60);
+            this.label1.TabIndex = 0;
+            this.label1.Text = resources.GetString("label1.Text");
             // 
             // install_type
             // 
@@ -174,6 +175,40 @@
             this.install_type.Size = new System.Drawing.Size(1024, 616);
             this.install_type.TabIndex = 1;
             this.install_type.Visible = false;
+            // 
+            // radioButton2
+            // 
+            this.radioButton2.AutoSize = true;
+            this.radioButton2.Location = new System.Drawing.Point(14, 56);
+            this.radioButton2.Name = "radioButton2";
+            this.radioButton2.Size = new System.Drawing.Size(143, 17);
+            this.radioButton2.TabIndex = 7;
+            this.radioButton2.TabStop = true;
+            this.radioButton2.Text = "Business/MSP (branded)";
+            this.radioButton2.UseVisualStyleBackColor = true;
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            // 
+            // radioButton1
+            // 
+            this.radioButton1.AutoSize = true;
+            this.radioButton1.Checked = true;
+            this.radioButton1.Location = new System.Drawing.Point(14, 32);
+            this.radioButton1.Name = "radioButton1";
+            this.radioButton1.Size = new System.Drawing.Size(132, 17);
+            this.radioButton1.TabIndex = 6;
+            this.radioButton1.TabStop = true;
+            this.radioButton1.Text = "Consumer (unbranded)";
+            this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(11, 15);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(143, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "Please select the install type:";
             // 
             // button3
             // 
@@ -194,40 +229,6 @@
             this.button4.Text = "next >";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(11, 15);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(143, 13);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Please select the install type:";
-            // 
-            // radioButton1
-            // 
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Checked = true;
-            this.radioButton1.Location = new System.Drawing.Point(14, 32);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(132, 17);
-            this.radioButton1.TabIndex = 6;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Consumer (unbranded)";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
-            // 
-            // radioButton2
-            // 
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Location = new System.Drawing.Point(14, 56);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(143, 17);
-            this.radioButton2.TabIndex = 7;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "Business/MSP (branded)";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
             // openFileDialog1
             // 
@@ -583,6 +584,23 @@
             this.install_dir.TabIndex = 9;
             this.install_dir.Visible = false;
             // 
+            // button12
+            // 
+            this.button12.Location = new System.Drawing.Point(935, 31);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(75, 23);
+            this.button12.TabIndex = 7;
+            this.button12.Text = "Browse";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // textBox6
+            // 
+            this.textBox6.Location = new System.Drawing.Point(15, 32);
+            this.textBox6.Name = "textBox6";
+            this.textBox6.Size = new System.Drawing.Size(914, 20);
+            this.textBox6.TabIndex = 6;
+            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -612,23 +630,6 @@
             this.button11.UseVisualStyleBackColor = true;
             this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
-            // textBox6
-            // 
-            this.textBox6.Location = new System.Drawing.Point(15, 32);
-            this.textBox6.Name = "textBox6";
-            this.textBox6.Size = new System.Drawing.Size(914, 20);
-            this.textBox6.TabIndex = 6;
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(935, 31);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 23);
-            this.button12.TabIndex = 7;
-            this.button12.Text = "Browse";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
             // status
             // 
             this.status.BackColor = System.Drawing.Color.White;
@@ -643,6 +644,63 @@
             this.status.Size = new System.Drawing.Size(1024, 616);
             this.status.TabIndex = 10;
             this.status.Visible = false;
+            // 
+            // xml_export
+            // 
+            this.xml_export.Controls.Add(this.label15);
+            this.xml_export.Controls.Add(this.button13);
+            this.xml_export.Location = new System.Drawing.Point(16, 136);
+            this.xml_export.Name = "xml_export";
+            this.xml_export.Size = new System.Drawing.Size(443, 111);
+            this.xml_export.TabIndex = 9;
+            this.xml_export.Visible = false;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(4, 77);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(434, 26);
+            this.label15.TabIndex = 1;
+            this.label15.Text = "Use the button above to export an XML file that you can place in the same\r\ndirect" +
+    "ory as this installer to use these same settings for future installs (which will" +
+    " run silently).";
+            // 
+            // button13
+            // 
+            this.button13.Location = new System.Drawing.Point(3, 4);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(168, 66);
+            this.button13.TabIndex = 0;
+            this.button13.Text = "Export silent install XML";
+            this.button13.UseVisualStyleBackColor = true;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(14, 104);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(106, 13);
+            this.label14.TabIndex = 8;
+            this.label14.Text = "Installation complete!";
+            this.label14.Visible = false;
+            // 
+            // statustxt
+            // 
+            this.statustxt.AutoSize = true;
+            this.statustxt.Location = new System.Drawing.Point(13, 66);
+            this.statustxt.Name = "statustxt";
+            this.statustxt.Size = new System.Drawing.Size(35, 13);
+            this.statustxt.TabIndex = 7;
+            this.statustxt.Text = "status";
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(14, 36);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(996, 23);
+            this.progressBar1.TabIndex = 6;
             // 
             // label13
             // 
@@ -664,73 +722,25 @@
             this.button15.Visible = false;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
-            // progressBar1
+            // saveFileDialog1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(14, 36);
-            this.progressBar1.Name = "progressBar1";
-            this.progressBar1.Size = new System.Drawing.Size(996, 23);
-            this.progressBar1.TabIndex = 6;
-            // 
-            // statustxt
-            // 
-            this.statustxt.AutoSize = true;
-            this.statustxt.Location = new System.Drawing.Point(13, 66);
-            this.statustxt.Name = "statustxt";
-            this.statustxt.Size = new System.Drawing.Size(35, 13);
-            this.statustxt.TabIndex = 7;
-            this.statustxt.Text = "status";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(14, 104);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(106, 13);
-            this.label14.TabIndex = 8;
-            this.label14.Text = "Installation complete!";
-            this.label14.Visible = false;
-            // 
-            // xml_export
-            // 
-            this.xml_export.Controls.Add(this.label15);
-            this.xml_export.Controls.Add(this.button13);
-            this.xml_export.Location = new System.Drawing.Point(16, 136);
-            this.xml_export.Name = "xml_export";
-            this.xml_export.Size = new System.Drawing.Size(443, 111);
-            this.xml_export.TabIndex = 9;
-            this.xml_export.Visible = false;
-            // 
-            // button13
-            // 
-            this.button13.Location = new System.Drawing.Point(3, 4);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(168, 66);
-            this.button13.TabIndex = 0;
-            this.button13.Text = "Export silent install XML";
-            this.button13.UseVisualStyleBackColor = true;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(4, 77);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(434, 26);
-            this.label15.TabIndex = 1;
-            this.label15.Text = "Use the button above to export an XML file that you can place in the same\r\ndirect" +
-    "ory as this installer to use these same settings for future installs (which will" +
-    " run silently).";
+            this.saveFileDialog1.AddExtension = false;
+            this.saveFileDialog1.DefaultExt = "xml";
+            this.saveFileDialog1.FileName = "silent.xml";
+            this.saveFileDialog1.SupportMultiDottedExtensions = true;
+            this.saveFileDialog1.Title = "Save as silent.xml";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 612);
+            this.Controls.Add(this.welcome);
+            this.Controls.Add(this.install_type);
             this.Controls.Add(this.status);
             this.Controls.Add(this.install_dir);
             this.Controls.Add(this.protected_items);
             this.Controls.Add(this.branding);
-            this.Controls.Add(this.welcome);
-            this.Controls.Add(this.install_type);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -818,6 +828,7 @@
         private System.Windows.Forms.Panel xml_export;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

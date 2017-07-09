@@ -22,6 +22,8 @@ namespace ScamBlockSetup
         public static int target = 5;
         public bool install_Finished = false;
 
+        settings set = new settings();
+
 
         public Form1()
         {
@@ -45,6 +47,7 @@ namespace ScamBlockSetup
         {
             try
             {
+                set.acceptLicense = true;
                 welcome.Visible = false;
                 install_type.Visible = true;
             }
@@ -333,6 +336,9 @@ namespace ScamBlockSetup
                     Directory.Delete(textBox6.Text, true);
                 }
                 Directory.CreateDirectory(textBox6.Text);
+                set.install_dir = textBox6.Text;
+
+
                 // Progress 1
                 progress++;
 
@@ -346,11 +352,13 @@ namespace ScamBlockSetup
 
                 if (textBox5.Text != "")
                 {
-                    DirectoryInfo dirinfo = new DirectoryInfo(textBox5.Text);
+                    FileInfo dirinfo = new FileInfo(textBox5.Text);
                     logo_name = dirinfo.Name;
                     stat = "Copying files";
                     File.Copy(textBox5.Text, textBox6.Text + logo_name);
                 }
+                set.logo = logo_name;
+                
 
                 //Progress 3
                 progress++;
@@ -374,9 +382,13 @@ namespace ScamBlockSetup
                 }
                 set_setting("install_location", textBox6.Text);
                 set_setting("company", textBox2.Text);
+                set.company = textBox2.Text;
                 set_setting("website", textBox3.Text);
+                set.website = textBox3.Text;
                 set_setting("contactInfo", richTextBox2.Text.Replace(Environment.NewLine, @"\n"));
+                set.contactInfo = richTextBox2.Text.Replace(Environment.NewLine, @"\n");
                 set_setting("remote_site", textBox1.Text);
+                set.supportUrl = textBox1.Text;
 
                 if (textBox4.Text != "")
                 {
@@ -384,24 +396,30 @@ namespace ScamBlockSetup
                     string salt = get_salt();
                     set_setting("passHash", sha256(salt + textBox4.Text));
                     set_setting("s", salt);
+                    set.s = salt;
+                    set.passHash = sha256(salt + textBox4.Text);
                 }
                 else
                 {
                     set_setting("passHash", "");
                     set_setting("s", "");
+                    set.s = "";
                 }
 
 
                 set_setting("lockdown_enabled", checkBox1.Checked.ToString());
+                set.lockout_enabled = checkBox1.Checked.ToString();
                 set_setting("logo", logo_name);
 
                 if (radioButton2.Checked)
                 {
                     set_setting("install_type", "msp");
+                    set.install_type = "msp";
                 }
                 else
                 {
                     set_setting("install_type", "consumer");
+                    set.install_type = "consumer";
                 }
 
                 // Progress 4
@@ -429,66 +447,82 @@ namespace ScamBlockSetup
                 if (checkBox2.Checked)
                 {
                     protect_file(@"C:\Windows\System32\syskey.exe");
+                    set.syskey = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\System32\syskey.exe", "false");
+                    set.syskey = false;
                 }
                 if (checkBox3.Checked)
                 {
                     protect_file(@"C:\Windows\System32\eventvwr.exe");
+                    set.eventView = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\System32\eventvwr.exe", "false");
+                    set.eventView = false;
                 }
                 if (checkBox4.Checked)
                 {
                     protect_file(@"C:\Windows\System32\mmc.exe");
+                    set.MMC = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\System32\mmc.exe", "false");
+                    set.MMC = false;
                 }
                 if (checkBox5.Checked)
                 {
                     protect_file(@"C:\Windows\regedit.exe");
+                    set.regedit = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\regedit.exe", "false");
+                    set.regedit = false;
                 }
                 if (checkBox6.Checked)
                 {
                     protect_file(@"C:\Windows\System32\msconfig.exe");
+                    set.msconfig = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\System32\msconfig.exe", "false");
+                    set.msconfig = false;
                 }
                 if (checkBox8.Checked)
                 {
                     protect_file(@"C:\Windows\System32\cmd.exe");
+                    set.cmd = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\System32\cmd.exe", "false");
+                    set.cmd = false;
                 }
                 if (checkBox9.Checked)
                 {
                     protect_file(@"C:\Windows\System32\perfmon.exe");
+                    set.prm = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\System32\perfmon.exe", "false");
+                    set.prm = false;
                 }
                 if (checkBox10.Checked)
                 {
                     protect_file(@"C:\Windows\System32\notepad.exe");
+                    set.notepad = true;
                 }
                 else
                 {
                     set_setting(@"C:\Windows\System32\notepad.exe", "false");
+                    set.notepad = false;
                 }
             }
             catch (Exception ex)
@@ -697,5 +731,47 @@ namespace ScamBlockSetup
         {
             this.Close();
         }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show(@"In the next screen you will select where to save the XML. Note, this XML *MUST* have the name ""silent.xml"" and it *MUST* be in the same directory that the installer is executing from to work properly.  If you have a logo that you specified, that must also be in the same folder.");
+            saveFileDialog1.InitialDirectory = Environment.CurrentDirectory;
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                using (var writer = new StreamWriter(saveFileDialog1.FileName))
+                {
+                    var serializer = new System.Xml.Serialization.XmlSerializer(set.GetType());
+                    serializer.Serialize(writer, set);
+                    writer.Flush();
+                }
+
+            }
+        }
     }
+}
+public class settings
+{
+    public bool acceptLicense { get; set; }
+    public string install_type { get; set; }
+
+    public string company { get; set; }
+    public string website { get; set; }
+    public string contactInfo { get; set; }
+    public string supportUrl { get; set; }
+    public string passHash { get; set; }
+
+    public string s { get; set; }
+    public string lockout_enabled { get; set; }
+    public string logo { get; set; }
+
+    public bool syskey { get; set; }
+    public bool eventView { get; set; }
+    public bool MMC { get; set; }
+    public bool regedit { get; set; }
+    public bool msconfig { get; set; }
+    public bool cmd { get; set; }
+    public bool prm { get; set; }
+    public bool notepad { get; set; }
+
+    public string install_dir { get; set; }
 }

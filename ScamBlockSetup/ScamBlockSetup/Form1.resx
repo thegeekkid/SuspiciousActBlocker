@@ -117,11 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Welcome to Scam Block.  This program watches for processes that scammers commonly use to trick their victims and warns the user that
-they could be a victim if they were cold-called.  Optionally, a password and branding can also be specified if this is being used on a managed
-computer.  This program is free for both consumer and corporate use (within the bounds of the license below).</value>
-  </data>
   <data name="richTextBox1.Text" xml:space="preserve">
     <value>GNU GENERAL PUBLIC LICENSE
 Version 2, June 1991
@@ -214,6 +209,11 @@ NO WARRANTY
 
 END OF TERMS AND CONDITIONS</value>
   </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Welcome to Scam Block.  This program watches for processes that scammers commonly use to trick their victims and warns the user that
+they could be a victim if they were cold-called.  Optionally, a password and branding can also be specified if this is being used on a managed
+computer.  This program is free for both consumer and corporate use (within the bounds of the license below).</value>
+  </data>
   <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -227,6 +227,9 @@ Any that you don't recognize or use on a regular basis should be checked.</value
   </data>
   <metadata name="folderBrowserDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>157, 17</value>
+  </metadata>
+  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>326, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

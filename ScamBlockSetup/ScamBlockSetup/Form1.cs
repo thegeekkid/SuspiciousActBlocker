@@ -95,17 +95,6 @@ namespace ScamBlockSetup
             }
         }
 
-        private void button9_Click(object sender, EventArgs e)
-        {
-            protected_items.Visible = false;
-            if (radioButton2.Checked)
-            {
-                branding.Visible = true;
-            }else
-            {
-                install_type.Visible = true;
-            }
-        }
 
         private void button6_Click(object sender, EventArgs e)
         {
@@ -115,7 +104,7 @@ namespace ScamBlockSetup
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            textBox6.Text = Environment.SpecialFolder.Programs + @"\Semrau Software Consulting\Scam Block\";
+            textBox6.Text = @"C:\Program Files\Semrau Software Consulting\Scam Block\";
         }
 
         private void button12_Click(object sender, EventArgs e)
@@ -442,6 +431,25 @@ namespace ScamBlockSetup
                 status.Visible = true;
                 trigger_install();
             }
+        }
+
+        private void button9_Click_1(object sender, EventArgs e)
+        {
+            protected_items.Visible = false;
+            if (radioButton2.Checked)
+            {
+                branding.Visible = true;
+            }
+            else
+            {
+                install_type.Visible = true;
+            }
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            protected_items.Visible = false;
+            install_dir.Visible = true;
         }
     }
 }

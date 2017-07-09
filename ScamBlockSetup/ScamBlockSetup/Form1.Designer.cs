@@ -571,6 +571,7 @@
             this.button9.TabIndex = 4;
             this.button9.Text = "< back";
             this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.button9_Click_1);
             // 
             // button10
             // 
@@ -580,6 +581,7 @@
             this.button10.TabIndex = 3;
             this.button10.Text = "next >";
             this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // install_dir
             // 

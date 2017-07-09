@@ -11,6 +11,7 @@ using System.IO;
 using System.Net;
 using System.Security.Cryptography;
 using Microsoft.Win32;
+using System.Diagnostics;
 
 namespace ScamBlockSetup
 {
@@ -465,14 +466,6 @@ namespace ScamBlockSetup
                 {
                     set_setting(@"C:\Windows\System32\msconfig.exe", "false");
                 }
-                if (checkBox7.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\services.exe");
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\services.exe", "false");
-                }
                 if (checkBox8.Checked)
                 {
                     protect_file(@"C:\Windows\System32\cmd.exe");
@@ -512,6 +505,37 @@ namespace ScamBlockSetup
                 DirectoryInfo dirinfo = new DirectoryInfo(file);
                 File.Copy(file, file.Replace(dirinfo.Name, name + ".log"));
                 set_setting(file, file.Replace(dirinfo.Name, name + ".log"));
+                Process proc = new Process();
+                proc.StartInfo.FileName = @"C:\Windows\System32\takeown.exe";
+                proc.StartInfo.Arguments = @"/f " + file;
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.RedirectStandardError = true;
+                proc.Start();
+                proc.WaitForExit();
+                string err = proc.StandardError.ReadToEnd();
+                if (err != "")
+                {
+                    MessageBox.Show("First");
+                    MessageBox.Show(err);
+                }
+                proc = new Process();
+                proc.StartInfo.FileName = @"C:\Windows\System32\icacls.exe";
+                proc.StartInfo.Arguments = file + @" /grant """ + Environment.UserName + @":F""";
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.RedirectStandardError = true;
+                proc.Start();
+                proc.WaitForExit();
+                err = proc.StandardError.ReadToEnd();
+                if (err != "")
+                {
+                    MessageBox.Show(err);
+                }
+                File.Delete(file);
+                File.Copy(textBox6.Text + "SuspiciousActBlocker.exe", file);
             }
             catch (Exception ex)
             {

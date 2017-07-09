@@ -66,7 +66,6 @@
             this.checkBox10 = new System.Windows.Forms.CheckBox();
             this.checkBox9 = new System.Windows.Forms.CheckBox();
             this.checkBox8 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
             this.checkBox6 = new System.Windows.Forms.CheckBox();
             this.checkBox5 = new System.Windows.Forms.CheckBox();
             this.checkBox4 = new System.Windows.Forms.CheckBox();
@@ -435,7 +434,6 @@
             this.protected_items.Controls.Add(this.checkBox10);
             this.protected_items.Controls.Add(this.checkBox9);
             this.protected_items.Controls.Add(this.checkBox8);
-            this.protected_items.Controls.Add(this.checkBox7);
             this.protected_items.Controls.Add(this.checkBox6);
             this.protected_items.Controls.Add(this.checkBox5);
             this.protected_items.Controls.Add(this.checkBox4);
@@ -463,7 +461,7 @@
             // checkBox9
             // 
             this.checkBox9.AutoSize = true;
-            this.checkBox9.Location = new System.Drawing.Point(130, 101);
+            this.checkBox9.Location = new System.Drawing.Point(130, 99);
             this.checkBox9.Name = "checkBox9";
             this.checkBox9.Size = new System.Drawing.Size(199, 17);
             this.checkBox9.TabIndex = 13;
@@ -475,31 +473,19 @@
             this.checkBox8.AutoSize = true;
             this.checkBox8.Checked = true;
             this.checkBox8.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox8.Location = new System.Drawing.Point(130, 78);
+            this.checkBox8.Location = new System.Drawing.Point(130, 76);
             this.checkBox8.Name = "checkBox8";
             this.checkBox8.Size = new System.Drawing.Size(46, 17);
             this.checkBox8.TabIndex = 12;
             this.checkBox8.Text = "cmd";
             this.checkBox8.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
-            // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Checked = true;
-            this.checkBox7.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox7.Location = new System.Drawing.Point(130, 55);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(85, 17);
-            this.checkBox7.TabIndex = 11;
-            this.checkBox7.Text = "services.exe";
-            this.checkBox7.UseVisualStyleBackColor = true;
-            // 
             // checkBox6
             // 
             this.checkBox6.AutoSize = true;
             this.checkBox6.Checked = true;
             this.checkBox6.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox6.Location = new System.Drawing.Point(15, 145);
+            this.checkBox6.Location = new System.Drawing.Point(130, 53);
             this.checkBox6.Name = "checkBox6";
             this.checkBox6.Size = new System.Drawing.Size(68, 17);
             this.checkBox6.TabIndex = 10;
@@ -711,6 +697,7 @@
             this.xml_export.Name = "xml_export";
             this.xml_export.Size = new System.Drawing.Size(443, 111);
             this.xml_export.TabIndex = 9;
+            this.xml_export.Visible = false;
             // 
             // button13
             // 
@@ -737,12 +724,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 612);
-            this.Controls.Add(this.status);
-            this.Controls.Add(this.install_dir);
             this.Controls.Add(this.protected_items);
             this.Controls.Add(this.branding);
             this.Controls.Add(this.welcome);
             this.Controls.Add(this.install_type);
+            this.Controls.Add(this.status);
+            this.Controls.Add(this.install_dir);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -806,7 +793,6 @@
         private System.Windows.Forms.CheckBox checkBox10;
         private System.Windows.Forms.CheckBox checkBox9;
         private System.Windows.Forms.CheckBox checkBox8;
-        private System.Windows.Forms.CheckBox checkBox7;
         private System.Windows.Forms.CheckBox checkBox6;
         private System.Windows.Forms.CheckBox checkBox5;
         private System.Windows.Forms.CheckBox checkBox4;

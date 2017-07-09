@@ -269,7 +269,7 @@
             this.checkBox1.Location = new System.Drawing.Point(186, 250);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(15, 14);
-            this.checkBox1.TabIndex = 22;
+            this.checkBox1.TabIndex = 5;
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // richTextBox2
@@ -277,7 +277,7 @@
             this.richTextBox2.Location = new System.Drawing.Point(130, 118);
             this.richTextBox2.Name = "richTextBox2";
             this.richTextBox2.Size = new System.Drawing.Size(641, 65);
-            this.richTextBox2.TabIndex = 21;
+            this.richTextBox2.TabIndex = 2;
             this.richTextBox2.Text = "";
             // 
             // button7
@@ -285,7 +285,7 @@
             this.button7.Location = new System.Drawing.Point(696, 275);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 20;
+            this.button7.TabIndex = 6;
             this.button7.Text = "Browse";
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
@@ -295,7 +295,7 @@
             this.textBox5.Location = new System.Drawing.Point(130, 276);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(560, 20);
-            this.textBox5.TabIndex = 18;
+            this.textBox5.TabIndex = 7;
             this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged_1);
             // 
             // textBox4
@@ -303,7 +303,7 @@
             this.textBox4.Location = new System.Drawing.Point(130, 218);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(641, 20);
-            this.textBox4.TabIndex = 17;
+            this.textBox4.TabIndex = 4;
             this.textBox4.UseSystemPasswordChar = true;
             // 
             // textBox3
@@ -311,21 +311,21 @@
             this.textBox3.Location = new System.Drawing.Point(130, 87);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(641, 20);
-            this.textBox3.TabIndex = 16;
+            this.textBox3.TabIndex = 1;
             // 
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(130, 58);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(641, 20);
-            this.textBox2.TabIndex = 15;
+            this.textBox2.TabIndex = 0;
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(130, 189);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(641, 20);
-            this.textBox1.TabIndex = 14;
+            this.textBox1.TabIndex = 3;
             // 
             // label11
             // 
@@ -404,7 +404,7 @@
             this.button5.Location = new System.Drawing.Point(12, 577);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(61, 23);
-            this.button5.TabIndex = 4;
+            this.button5.TabIndex = 9;
             this.button5.Text = "< back";
             this.button5.UseVisualStyleBackColor = true;
             // 
@@ -413,7 +413,7 @@
             this.button6.Location = new System.Drawing.Point(947, 576);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(62, 23);
-            this.button6.TabIndex = 3;
+            this.button6.TabIndex = 8;
             this.button6.Text = "next >";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
@@ -662,6 +662,7 @@
             this.button15.Text = "Finish";
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Visible = false;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // progressBar1
             // 
@@ -724,12 +725,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 612);
+            this.Controls.Add(this.status);
+            this.Controls.Add(this.install_dir);
             this.Controls.Add(this.protected_items);
             this.Controls.Add(this.branding);
             this.Controls.Add(this.welcome);
             this.Controls.Add(this.install_type);
-            this.Controls.Add(this.status);
-            this.Controls.Add(this.install_dir);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";

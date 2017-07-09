@@ -801,6 +801,12 @@ namespace ScamBlockSetup
             MessageBox.Show(@"The xml has been placed in the same directory as this setup executable.  To run the installer silently, keep the xml named ""silent.xml"" and make sure it is in the same directory as the setup executable when you run it.  If you specified a logo, that must also be in the same directory as the setup executable.");
 
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            branding.Visible = false;
+            install_type.Visible = true;
+        }
     }
 }
 public class settings

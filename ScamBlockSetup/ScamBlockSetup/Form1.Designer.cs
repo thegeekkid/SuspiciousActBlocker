@@ -407,6 +407,7 @@
             this.button5.TabIndex = 9;
             this.button5.Text = "< back";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -726,12 +727,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 612);
-            this.Controls.Add(this.status);
-            this.Controls.Add(this.install_dir);
-            this.Controls.Add(this.protected_items);
             this.Controls.Add(this.branding);
             this.Controls.Add(this.welcome);
             this.Controls.Add(this.install_type);
+            this.Controls.Add(this.status);
+            this.Controls.Add(this.install_dir);
+            this.Controls.Add(this.protected_items);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";

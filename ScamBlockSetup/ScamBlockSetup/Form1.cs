@@ -325,7 +325,11 @@ namespace ScamBlockSetup
                 stat = "Creating folders";
                 if (Directory.Exists(textBox6.Text))
                 {
-                    Directory.Delete(textBox6.Text);
+                    foreach (string file in Directory.GetFiles(textBox6.Text))
+                    {
+                        File.Delete(file);
+                    }
+                    Directory.Delete(textBox6.Text, true);
                 }
                 Directory.CreateDirectory(textBox6.Text);
                 // Progress 1
@@ -351,6 +355,22 @@ namespace ScamBlockSetup
                 progress++;
 
                 stat = "Saving settings";
+                try
+                {
+                    Registry.LocalMachine.OpenSubKey("SOFTWARE", true).CreateSubKey("Semrau Software Consulting");
+                }
+                catch (Exception ex2) 
+                {
+                    MessageBox.Show(ex2.ToString());
+                }
+                try
+                {
+                    Registry.LocalMachine.OpenSubKey("SOFTWARE").OpenSubKey("Semrau Software Consulting", true).CreateSubKey("SuspiciousActBlocker");
+                }
+                catch (Exception ex2)
+                {
+                    MessageBox.Show(ex2.ToString());
+                }
                 set_setting("install_location", textBox6.Text);
                 set_setting("company", textBox2.Text);
                 set_setting("website", textBox3.Text);

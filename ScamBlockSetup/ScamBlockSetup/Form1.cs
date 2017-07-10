@@ -30,154 +30,6 @@ namespace ScamBlockSetup
             InitializeComponent();
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                this.Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                set.acceptLicense = true;
-                welcome.Visible = false;
-                install_type.Visible = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                install_type.Visible = false;
-                welcome.Visible = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
-
-        private void radioButton2_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (radioButton2.Checked)
-                {
-                    radioButton1.Checked = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void radioButton1_CheckedChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                if (radioButton1.Checked)
-                {
-                    radioButton2.Checked = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button4_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                install_type.Visible = false;
-                if (radioButton2.Checked)
-                {
-                    branding.Visible = true;
-                }
-                else
-                {
-                    protected_items.Visible = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-
-
-
-        private void textBox5_TextChanged_1(object sender, EventArgs e)
-        {
-            try
-            {
-                if (File.Exists(textBox5.Text))
-                {
-                    pictureBox1.Image = Image.FromFile(textBox5.Text);
-                    pictureBox1.Visible = true;
-                }
-                else
-                {
-                    pictureBox1.Visible = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button7_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    textBox5.Text = openFileDialog1.FileName;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-
-        private void button6_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                branding.Visible = false;
-                protected_items.Visible = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
         private void Form1_Load(object sender, EventArgs e)
         {
             try
@@ -203,7 +55,8 @@ namespace ScamBlockSetup
                         textBox4.Text = "|||***|||";
                     }
                     checkBox1.Checked = bool.Parse(set.lockout_enabled);
-                    if ((set.logo != "") && (File.Exists(Environment.CurrentDirectory + @"\" + set.logo))) {
+                    if ((set.logo != "") && (File.Exists(Environment.CurrentDirectory + @"\" + set.logo)))
+                    {
                         textBox5.Text = Environment.CurrentDirectory + @"\" + set.logo;
                     }
                     checkBox2.Checked = set.syskey;
@@ -223,33 +76,11 @@ namespace ScamBlockSetup
             {
                 MessageBox.Show(ex.ToString());
             }
-            
+
         }
 
-        public static settings LoadXML(string FileName)
-        {
-            using (var stream = System.IO.File.OpenRead(FileName))
-            {
-                var serializer = new System.Xml.Serialization.XmlSerializer(typeof(settings));
-                return serializer.Deserialize(stream) as settings;
-            }
-        }
 
-        private void button12_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    textBox6.Text = folderBrowserDialog1.SelectedPath + @"\";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
+
 
         private void trigger_install()
         {
@@ -265,8 +96,293 @@ namespace ScamBlockSetup
             {
                 MessageBox.Show(ex.ToString());
             }
-            
+
         }
+
+        private void do_install()
+        {
+            try
+            {
+                stat = "Creating folders";
+                if (Directory.Exists(textBox6.Text))
+                {
+                    foreach (string file in Directory.GetFiles(textBox6.Text))
+                    {
+                        File.Delete(file);
+                    }
+                    Directory.Delete(textBox6.Text, true);
+                }
+                Directory.CreateDirectory(textBox6.Text);
+                set.install_dir = textBox6.Text;
+
+
+                // Progress 1
+                progress++;
+
+                stat = "Downloading components";
+                WebClient wc = new WebClient();
+                wc.DownloadFile(@"https://downloads.semrauconsulting.com/ScamBlock/SuspiciousActBlocker.exe", textBox6.Text + @"SuspiciousActBlocker.exe");
+                wc.DownloadFile(@"https://downloads.semrauconsulting.com/ScamBlock/executor.exe", textBox6.Text + @"executor.exe");
+                // Progress 2
+                progress++;
+
+                string logo_name = "";
+
+                if (textBox5.Text != "")
+                {
+                    FileInfo dirinfo = new FileInfo(textBox5.Text);
+                    logo_name = dirinfo.Name;
+                    stat = "Copying files";
+                    File.Copy(textBox5.Text, textBox6.Text + logo_name);
+                }
+                set.logo = logo_name;
+
+
+                //Progress 3
+                progress++;
+
+                stat = "Saving settings";
+                try
+                {
+                    Registry.LocalMachine.OpenSubKey("SOFTWARE", true).CreateSubKey("Semrau Software Consulting");
+                }
+                catch (Exception ex2)
+                {
+                    MessageBox.Show(ex2.ToString());
+                }
+                try
+                {
+                    Registry.LocalMachine.OpenSubKey("SOFTWARE").OpenSubKey("Semrau Software Consulting", true).CreateSubKey("SuspiciousActBlocker");
+                }
+                catch (Exception ex2)
+                {
+                    MessageBox.Show(ex2.ToString());
+                }
+                set_setting("install_location", textBox6.Text);
+                set_setting("company", textBox2.Text);
+                set.company = textBox2.Text;
+                set_setting("website", textBox3.Text);
+                set.website = textBox3.Text;
+                set_setting("contactInfo", richTextBox2.Text.Replace(Environment.NewLine, @"\n"));
+                set.contactInfo = richTextBox2.Text.Replace(Environment.NewLine, @"\n");
+                set_setting("remote_site", textBox1.Text);
+                set.supportUrl = textBox1.Text;
+
+                if (textBox4.Text != "")
+                {
+                    if (textBox4.Text == "|||***|||")
+                    {
+
+                        set_setting("passHash", set.passHash);
+                        set_setting("s", set.s);
+
+                    }
+                    else
+                    {
+                        string salt = get_salt();
+                        set_setting("passHash", sha256(salt + textBox4.Text));
+                        set_setting("s", salt);
+                        set.s = salt;
+                        set.passHash = sha256(salt + textBox4.Text);
+                    }
+
+
+                }
+                else
+                {
+                    set_setting("passHash", "");
+                    set_setting("s", "");
+                    set.s = "";
+                }
+
+
+                set_setting("lockdown_enabled", checkBox1.Checked.ToString());
+                set.lockout_enabled = checkBox1.Checked.ToString();
+                set_setting("logo", logo_name);
+
+                if (radioButton2.Checked)
+                {
+                    set_setting("install_type", "msp");
+                    set.install_type = "msp";
+                }
+                else
+                {
+                    set_setting("install_type", "consumer");
+                    set.install_type = "consumer";
+                }
+
+                // Progress 4
+                progress++;
+
+                stat = "Protecting system";
+                do_protection();
+
+                // Progress 5
+                progress++;
+                stat = "Finished";
+
+                install_Finished = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void do_protection()
+        {
+            try
+            {
+                if (checkBox2.Checked)
+                {
+                    protect_file(@"C:\Windows\System32\syskey.exe");
+                    set.syskey = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\System32\syskey.exe", "false");
+                    set.syskey = false;
+                }
+                if (checkBox3.Checked)
+                {
+                    protect_file(@"C:\Windows\System32\eventvwr.exe");
+                    set.eventView = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\System32\eventvwr.exe", "false");
+                    set.eventView = false;
+                }
+                if (checkBox4.Checked)
+                {
+                    protect_file(@"C:\Windows\System32\mmc.exe");
+                    set.MMC = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\System32\mmc.exe", "false");
+                    set.MMC = false;
+                }
+                if (checkBox5.Checked)
+                {
+                    protect_file(@"C:\Windows\regedit.exe");
+                    set.regedit = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\regedit.exe", "false");
+                    set.regedit = false;
+                }
+                if (checkBox6.Checked)
+                {
+                    protect_file(@"C:\Windows\System32\msconfig.exe");
+                    set.msconfig = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\System32\msconfig.exe", "false");
+                    set.msconfig = false;
+                }
+                if (checkBox8.Checked)
+                {
+                    protect_file(@"C:\Windows\System32\cmd.exe");
+                    set.cmd = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\System32\cmd.exe", "false");
+                    set.cmd = false;
+                }
+                if (checkBox9.Checked)
+                {
+                    protect_file(@"C:\Windows\System32\perfmon.exe");
+                    set.prm = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\System32\perfmon.exe", "false");
+                    set.prm = false;
+                }
+                if (checkBox10.Checked)
+                {
+                    protect_file(@"C:\Windows\System32\notepad.exe");
+                    set.notepad = true;
+                }
+                else
+                {
+                    set_setting(@"C:\Windows\System32\notepad.exe", "false");
+                    set.notepad = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+        private void protect_file(string file)
+        {
+            try
+            {
+                Process proc = new Process();
+                proc.StartInfo.FileName = @"C:\Windows\System32\takeown.exe";
+                proc.StartInfo.Arguments = @"/f " + file;
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.RedirectStandardError = true;
+                proc.Start();
+                proc.WaitForExit();
+                string err = proc.StandardError.ReadToEnd();
+                if (err != "")
+                {
+                    MessageBox.Show(err);
+                }
+                proc = new Process();
+                proc.StartInfo.FileName = @"C:\Windows\System32\icacls.exe";
+                proc.StartInfo.Arguments = file + @" /grant """ + Environment.UserName + @":F""";
+                proc.StartInfo.UseShellExecute = false;
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.CreateNoWindow = true;
+                proc.StartInfo.RedirectStandardError = true;
+                proc.Start();
+                proc.WaitForExit();
+                err = proc.StandardError.ReadToEnd();
+                if (err != "")
+                {
+                    MessageBox.Show(err);
+                }
+                string name = get_name();
+                DirectoryInfo dirinfo = new DirectoryInfo(file);
+                File.Copy(file, file.Replace(dirinfo.Name, name + ".log"));
+                set_setting(file, file.Replace(dirinfo.Name, name + ".log"));
+
+                File.Delete(file);
+                File.Copy(textBox6.Text + "SuspiciousActBlocker.exe", file);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+        
+        private void set_setting(string name, string value)
+        {
+            try
+            {
+                Registry.LocalMachine.OpenSubKey("SOFTWARE").OpenSubKey("Semrau Software Consulting").OpenSubKey("SuspiciousActBlocker", true).SetValue(name, value);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+
+
 
         private void status_updater()
         {
@@ -363,269 +479,252 @@ namespace ScamBlockSetup
             {
                 MessageBox.Show(ex.ToString());
             }
-            
+
         }
 
-        private void do_install()
+
+
+
+
+
+        private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                stat = "Creating folders";
-                if (Directory.Exists(textBox6.Text))
-                {
-                    foreach (string file in Directory.GetFiles(textBox6.Text))
-                    {
-                        File.Delete(file);
-                    }
-                    Directory.Delete(textBox6.Text, true);
-                }
-                Directory.CreateDirectory(textBox6.Text);
-                set.install_dir = textBox6.Text;
+                set.acceptLicense = true;
+                welcome.Visible = false;
+                install_type.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
 
-                // Progress 1
-                progress++;
+        }
 
-                stat = "Downloading components";
-                WebClient wc = new WebClient();
-                wc.DownloadFile(@"https://downloads.semrauconsulting.com/ScamBlock/SuspiciousActBlocker.exe", textBox6.Text + @"SuspiciousActBlocker.exe");
-                wc.DownloadFile(@"https://downloads.semrauconsulting.com/ScamBlock/executor.exe", textBox6.Text + @"executor.exe");
-                // Progress 2
-                progress++;
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                install_type.Visible = false;
+                welcome.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
 
-                string logo_name = "";
-
-                if (textBox5.Text != "")
-                {
-                    FileInfo dirinfo = new FileInfo(textBox5.Text);
-                    logo_name = dirinfo.Name;
-                    stat = "Copying files";
-                    File.Copy(textBox5.Text, textBox6.Text + logo_name);
-                }
-                set.logo = logo_name;
-                
-
-                //Progress 3
-                progress++;
-
-                stat = "Saving settings";
-                try
-                {
-                    Registry.LocalMachine.OpenSubKey("SOFTWARE", true).CreateSubKey("Semrau Software Consulting");
-                }
-                catch (Exception ex2) 
-                {
-                    MessageBox.Show(ex2.ToString());
-                }
-                try
-                {
-                    Registry.LocalMachine.OpenSubKey("SOFTWARE").OpenSubKey("Semrau Software Consulting", true).CreateSubKey("SuspiciousActBlocker");
-                }
-                catch (Exception ex2)
-                {
-                    MessageBox.Show(ex2.ToString());
-                }
-                set_setting("install_location", textBox6.Text);
-                set_setting("company", textBox2.Text);
-                set.company = textBox2.Text;
-                set_setting("website", textBox3.Text);
-                set.website = textBox3.Text;
-                set_setting("contactInfo", richTextBox2.Text.Replace(Environment.NewLine, @"\n"));
-                set.contactInfo = richTextBox2.Text.Replace(Environment.NewLine, @"\n");
-                set_setting("remote_site", textBox1.Text);
-                set.supportUrl = textBox1.Text;
-
-                if (textBox4.Text != "")
-                {
-                    if (textBox4.Text == "|||***|||")
-                    {
-
-                        set_setting("passHash", set.passHash);
-                        set_setting("s", set.s);
-                        
-                    }
-                    else
-                    {
-                        string salt = get_salt();
-                        set_setting("passHash", sha256(salt + textBox4.Text));
-                        set_setting("s", salt);
-                        set.s = salt;
-                        set.passHash = sha256(salt + textBox4.Text);
-                    }
-
-                    
-                }
-                else
-                {
-                    set_setting("passHash", "");
-                    set_setting("s", "");
-                    set.s = "";
-                }
-
-
-                set_setting("lockdown_enabled", checkBox1.Checked.ToString());
-                set.lockout_enabled = checkBox1.Checked.ToString();
-                set_setting("logo", logo_name);
-
+        private void button4_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                install_type.Visible = false;
                 if (radioButton2.Checked)
                 {
-                    set_setting("install_type", "msp");
-                    set.install_type = "msp";
+                    branding.Visible = true;
                 }
                 else
                 {
-                    set_setting("install_type", "consumer");
-                    set.install_type = "consumer";
-                }
-
-                // Progress 4
-                progress++;
-
-                stat = "Protecting system";
-                do_protection();
-
-                // Progress 5
-                progress++;
-                stat = "Finished";
-
-                install_Finished = true;
-            }catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void do_protection()
-        {
-            try
-            {
-                if (checkBox2.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\syskey.exe");
-                    set.syskey = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\syskey.exe", "false");
-                    set.syskey = false;
-                }
-                if (checkBox3.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\eventvwr.exe");
-                    set.eventView = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\eventvwr.exe", "false");
-                    set.eventView = false;
-                }
-                if (checkBox4.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\mmc.exe");
-                    set.MMC = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\mmc.exe", "false");
-                    set.MMC = false;
-                }
-                if (checkBox5.Checked)
-                {
-                    protect_file(@"C:\Windows\regedit.exe");
-                    set.regedit = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\regedit.exe", "false");
-                    set.regedit = false;
-                }
-                if (checkBox6.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\msconfig.exe");
-                    set.msconfig = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\msconfig.exe", "false");
-                    set.msconfig = false;
-                }
-                if (checkBox8.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\cmd.exe");
-                    set.cmd = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\cmd.exe", "false");
-                    set.cmd = false;
-                }
-                if (checkBox9.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\perfmon.exe");
-                    set.prm = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\perfmon.exe", "false");
-                    set.prm = false;
-                }
-                if (checkBox10.Checked)
-                {
-                    protect_file(@"C:\Windows\System32\notepad.exe");
-                    set.notepad = true;
-                }
-                else
-                {
-                    set_setting(@"C:\Windows\System32\notepad.exe", "false");
-                    set.notepad = false;
+                    protected_items.Visible = true;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.ToString());
             }
-           
+
         }
-        private void protect_file(string file)
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            branding.Visible = false;
+            install_type.Visible = true;
+        }
+
+        private void button6_Click(object sender, EventArgs e)
         {
             try
             {
-                Process proc = new Process();
-                proc.StartInfo.FileName = @"C:\Windows\System32\takeown.exe";
-                proc.StartInfo.Arguments = @"/f " + file;
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                proc.StartInfo.CreateNoWindow = true;
-                proc.StartInfo.RedirectStandardError = true;
-                proc.Start();
-                proc.WaitForExit();
-                string err = proc.StandardError.ReadToEnd();
-                if (err != "")
+                branding.Visible = false;
+                protected_items.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (openFileDialog1.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    MessageBox.Show(err);
+                    textBox5.Text = openFileDialog1.FileName;
                 }
-                proc = new Process();
-                proc.StartInfo.FileName = @"C:\Windows\System32\icacls.exe";
-                proc.StartInfo.Arguments = file + @" /grant """ + Environment.UserName + @":F""";
-                proc.StartInfo.UseShellExecute = false;
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                proc.StartInfo.CreateNoWindow = true;
-                proc.StartInfo.RedirectStandardError = true;
-                proc.Start();
-                proc.WaitForExit();
-                err = proc.StandardError.ReadToEnd();
-                if (err != "")
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                install_dir.Visible = false;
+                protected_items.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button9_Click_1(object sender, EventArgs e)
+        {
+            try
+            {
+                protected_items.Visible = false;
+                if (radioButton2.Checked)
                 {
-                    MessageBox.Show(err);
+                    branding.Visible = true;
                 }
-                string name = get_name();
-                DirectoryInfo dirinfo = new DirectoryInfo(file);
-                File.Copy(file, file.Replace(dirinfo.Name, name + ".log"));
-                set_setting(file, file.Replace(dirinfo.Name, name + ".log"));
-                
-                File.Delete(file);
-                File.Copy(textBox6.Text + "SuspiciousActBlocker.exe", file);
+                else
+                {
+                    install_type.Visible = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                protected_items.Visible = false;
+                install_dir.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if ((Directory.Exists(textBox6.Text)) && (MessageBox.Show("Warning!  The folder exists and all data will be erased.  Are you sure that you want to continue?", "Warning", MessageBoxButtons.YesNo) == DialogResult.No))
+                {
+                    // Directory exists and user doesn't want to continue
+                    textBox6.Text = "";
+                }
+                else
+                {
+                    // Directory doesn't exist, or the user doesn't care.
+                    if (!(textBox6.Text.EndsWith(@"\")))
+                    {
+                        textBox6.Text += @"\";
+                    }
+                    install_dir.Visible = false;
+                    status.Visible = true;
+                    trigger_install();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (folderBrowserDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    textBox6.Text = folderBrowserDialog1.SelectedPath + @"\";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+
+            using (var writer = new StreamWriter(Environment.CurrentDirectory + @"\silent.xml"))
+            {
+                var serializer = new System.Xml.Serialization.XmlSerializer(set.GetType());
+                serializer.Serialize(writer, set);
+                writer.Flush();
+            }
+
+            MessageBox.Show(@"The xml has been placed in the same directory as this setup executable.  To run the installer silently, keep the xml named ""silent.xml"" and make sure it is in the same directory as the setup executable when you run it.  If you specified a logo, that must also be in the same directory as the setup executable.");
+
+        }
+
+        // Button 14 no longer exists
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+
+
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (radioButton1.Checked)
+                {
+                    radioButton2.Checked = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (radioButton2.Checked)
+                {
+                    radioButton1.Checked = false;
+                }
             }
             catch (Exception ex)
             {
@@ -633,6 +732,31 @@ namespace ScamBlockSetup
             }
             
         }
+
+        
+
+        private void textBox5_TextChanged_1(object sender, EventArgs e)
+        {
+            try
+            {
+                if (File.Exists(textBox5.Text))
+                {
+                    pictureBox1.Image = Image.FromFile(textBox5.Text);
+                    pictureBox1.Visible = true;
+                }
+                else
+                {
+                    pictureBox1.Visible = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }       
+
+        
 
         private string get_salt()
         {
@@ -691,121 +815,13 @@ namespace ScamBlockSetup
             
         }
 
-
-
-        private void set_setting(string name, string value)
+        public static settings LoadXML(string FileName)
         {
-            try
+            using (var stream = System.IO.File.OpenRead(FileName))
             {
-                Registry.LocalMachine.OpenSubKey("SOFTWARE").OpenSubKey("Semrau Software Consulting").OpenSubKey("SuspiciousActBlocker", true).SetValue(name, value);
+                var serializer = new System.Xml.Serialization.XmlSerializer(typeof(settings));
+                return serializer.Deserialize(stream) as settings;
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button8_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                install_dir.Visible = false;
-                protected_items.Visible = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button11_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if ((Directory.Exists(textBox6.Text)) && (MessageBox.Show("Warning!  The folder exists and all data will be erased.  Are you sure that you want to continue?", "Warning", MessageBoxButtons.YesNo) == DialogResult.No))
-                {
-                    // Directory exists and user doesn't want to continue
-                    textBox6.Text = "";
-                }
-                else
-                {
-                    // Directory doesn't exist, or the user doesn't care.
-                    if (!(textBox6.Text.EndsWith(@"\")))
-                    {
-                        textBox6.Text += @"\";
-                    }
-                    install_dir.Visible = false;
-                    status.Visible = true;
-                    trigger_install();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button9_Click_1(object sender, EventArgs e)
-        {
-            try
-            {
-                protected_items.Visible = false;
-                if (radioButton2.Checked)
-                {
-                    branding.Visible = true;
-                }
-                else
-                {
-                    install_type.Visible = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button10_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                protected_items.Visible = false;
-                install_dir.Visible = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
-        private void button15_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void button13_Click(object sender, EventArgs e)
-        {
-            
-                using (var writer = new StreamWriter(Environment.CurrentDirectory + @"\silent.xml"))
-                {
-                    var serializer = new System.Xml.Serialization.XmlSerializer(set.GetType());
-                    serializer.Serialize(writer, set);
-                    writer.Flush();
-                }
-
-            MessageBox.Show(@"The xml has been placed in the same directory as this setup executable.  To run the installer silently, keep the xml named ""silent.xml"" and make sure it is in the same directory as the setup executable when you run it.  If you specified a logo, that must also be in the same directory as the setup executable.");
-
-        }
-
-        private void button5_Click(object sender, EventArgs e)
-        {
-            branding.Visible = false;
-            install_type.Visible = true;
         }
     }
 }

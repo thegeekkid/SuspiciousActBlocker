@@ -76,6 +76,10 @@ namespace SuspiciousActBlocker
                         textBox1.Visible = false;
                         label3.Visible = false;
                         button4.Visible = true;
+                        if (label2.Text.Contains(@", they have the password to bypass this message."))
+                        {
+                            label2.Text.Replace(@", they have the password to bypass this message.", ".");
+                        }
                     }
                     if (vars.lockdown_enabled == "False")
                     {

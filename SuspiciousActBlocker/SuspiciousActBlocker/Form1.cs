@@ -127,19 +127,43 @@ namespace SuspiciousActBlocker
             }
         }
 
-        private string get_setting(string name)
+        private void openAnyway()
         {
+
             try
             {
-                return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
+                Process proc = new Process();
+                proc.StartInfo.FileName = vars.install_location + @"executor.exe";
+                string pw = "";
+                if (textBox1.Text == "")
+                {
+                    pw = "na";
+                }
+                else
+                {
+                    pw = textBox1.Text;
+                }
+                proc.StartInfo.Arguments = @"""" + pw + @""" """ + vars.target_name + @"""";
+                if (vars.args != "")
+                {
+                    proc.StartInfo.Arguments += @" """ + vars.args + @"""";
+                }
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.CreateNoWindow = true;
+                //MessageBox.Show(proc.StartInfo.Arguments);
+                proc.Start();
+                Environment.Exit(0);
+                this.Close();
+                Application.Exit();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error getting " + name + " setting.  Please send this error to support: " + Environment.NewLine + ex.ToString());
-                return "";
+                MessageBox.Show("Error overriding: " + Environment.NewLine + ex.ToString());
             }
-            
+
         }
+
+        
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
@@ -231,41 +255,22 @@ namespace SuspiciousActBlocker
             
         }
 
-        private void openAnyway()
+        private void button5_Click(object sender, EventArgs e)
         {
-
             try
             {
-                Process proc = new Process();
-                proc.StartInfo.FileName = vars.install_location + @"executor.exe";
-                string pw = "";
-                if (textBox1.Text == "")
-                {
-                    pw = "na";
-                }
-                else
-                {
-                    pw = textBox1.Text;
-                }
-                proc.StartInfo.Arguments = @"""" + pw + @""" """ + vars.target_name + @"""";
-                if (vars.args != "")
-                {
-                    proc.StartInfo.Arguments += @" """ + vars.args + @"""";
-                }
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                proc.StartInfo.CreateNoWindow = true;
-                //MessageBox.Show(proc.StartInfo.Arguments);
-                proc.Start();
-                Environment.Exit(0);
-                this.Close();
-                Application.Exit();
+                lockdown ld = new lockdown();
+                this.Visible = false;
+                ld.ShowDialog();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error overriding: " + Environment.NewLine + ex.ToString());
+                MessageBox.Show("Error entering lockdown: " + Environment.NewLine + ex.ToString());
             }
-            
+
         }
+
+
 
         static string sha256(string input)
         {
@@ -289,20 +294,21 @@ namespace SuspiciousActBlocker
             
         }
 
-        private void button5_Click(object sender, EventArgs e)
+        private string get_setting(string name)
         {
             try
             {
-                lockdown ld = new lockdown();
-                this.Visible = false;
-                ld.ShowDialog();
+                return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error entering lockdown: " + Environment.NewLine + ex.ToString());
+                MessageBox.Show("Error getting " + name + " setting.  Please send this error to support: " + Environment.NewLine + ex.ToString());
+                return "";
             }
-            
+
         }
+
+        
     }
 
     public class vars

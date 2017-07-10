@@ -214,6 +214,54 @@ namespace SuspiciousActBlocker
             
         }
 
+        private void exitProcedure()
+        {
+            try
+            {
+                count = new Thread(countdown);
+                count.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+        private void countdown()
+        {
+            try
+            {
+                int elapsed_time = 0;
+
+                do
+                {
+                    if (label4.InvokeRequired)
+                    {
+                        label4.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            label4.Text = (20 - elapsed_time).ToString();
+                        });
+                    }
+                    else
+                    {
+                        label4.Text = (20 - elapsed_time).ToString();
+                    }
+
+                    Thread.Sleep(1000);
+                    elapsed_time++;
+                } while (elapsed_time <= 20);
+
+                Environment.Exit(0);
+                this.Close();
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             try
@@ -289,31 +337,6 @@ namespace SuspiciousActBlocker
             
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (button5.BackColor == Color.Orange)
-                {
-                    jmekill.Abort();
-                    button5.BackColor = Color.Green;
-                    button5.Text = "Join.Me" + Environment.NewLine + "(Enabled)";
-                }
-                else
-                {
-                    jmekill = new Thread(jme);
-                    jmekill.Start();
-                    button5.BackColor = Color.Orange;
-                    button5.Text = "Join.Me" + Environment.NewLine + "(Disabled)";
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-
         private void button4_Click(object sender, EventArgs e)
         {
             try
@@ -330,6 +353,31 @@ namespace SuspiciousActBlocker
                     bomgarkill.Start();
                     button4.BackColor = Color.Orange;
                     button4.Text = "Bomgar" + Environment.NewLine + "(Disabled)";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (button5.BackColor == Color.Orange)
+                {
+                    jmekill.Abort();
+                    button5.BackColor = Color.Green;
+                    button5.Text = "Join.Me" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    jmekill = new Thread(jme);
+                    jmekill.Start();
+                    button5.BackColor = Color.Orange;
+                    button5.Text = "Join.Me" + Environment.NewLine + "(Disabled)";
                 }
             }
             catch (Exception ex)
@@ -432,53 +480,7 @@ namespace SuspiciousActBlocker
             }
             
         }
-        private void exitProcedure()
-        {
-            try
-            {
-                count = new Thread(countdown);
-                count.Start();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
-        private void countdown()
-        {
-            try
-            {
-                int elapsed_time = 0;
-
-                do
-                {
-                    if (label4.InvokeRequired)
-                    {
-                        label4.BeginInvoke((MethodInvoker)delegate ()
-                        {
-                            label4.Text = (20 - elapsed_time).ToString();
-                        });
-                    }
-                    else
-                    {
-                        label4.Text = (20 - elapsed_time).ToString();
-                    }
-
-                    Thread.Sleep(1000);
-                    elapsed_time++;
-                } while (elapsed_time <= 20);
-
-                Environment.Exit(0);
-                this.Close();
-                Application.Exit();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-            
-        }
+        
 
         private void button10_Click(object sender, EventArgs e)
         {

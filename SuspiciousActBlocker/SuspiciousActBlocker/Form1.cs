@@ -137,7 +137,7 @@ namespace SuspiciousActBlocker
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.Close();
+            Environment.Exit(0);
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -196,7 +196,7 @@ namespace SuspiciousActBlocker
             proc.StartInfo.CreateNoWindow = true;
             //MessageBox.Show(proc.StartInfo.Arguments);
             proc.Start();
-            this.Close();
+            Environment.Exit(0);
         }
 
         static string sha256(string input)
@@ -209,6 +209,13 @@ namespace SuspiciousActBlocker
                 hash.Append(theByte.ToString("x2"));
             }
             return hash.ToString();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            lockdown ld = new lockdown();
+            this.Visible = false;
+            ld.ShowDialog();
         }
     }
 

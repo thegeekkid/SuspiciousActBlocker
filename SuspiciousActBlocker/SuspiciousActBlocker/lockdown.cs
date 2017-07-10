@@ -29,291 +29,469 @@ namespace SuspiciousActBlocker
 
         private void lockdown_Load(object sender, EventArgs e)
         {
-            lmikill = new Thread(lmi);
-            tvkill = new Thread(tv);
-            sckill = new Thread(SC);
-            jmekill = new Thread(jme);
-            zakill = new Thread(za);
-            splashkill = new Thread(splashtop);
-            bomgarkill = new Thread(bomgar);
-            inetkill = new Thread(inet);
+            try
+            {
+                lmikill = new Thread(lmi);
+                tvkill = new Thread(tv);
+                sckill = new Thread(SC);
+                jmekill = new Thread(jme);
+                zakill = new Thread(za);
+                splashkill = new Thread(splashtop);
+                bomgarkill = new Thread(bomgar);
+                inetkill = new Thread(inet);
 
-            lmikill.Start();
-            button1.BackColor = Color.Orange;
-            tvkill.Start();
-            button2.BackColor = Color.Orange;
-            sckill.Start();
-            button3.BackColor = Color.Orange;
-            jmekill.Start();
-            button5.BackColor = Color.Orange;
-            zakill.Start();
-            button6.BackColor = Color.Orange;
-            splashkill.Start();
-            button7.BackColor = Color.Orange;
-            bomgarkill.Start();
-            button4.BackColor = Color.Orange;
+                lmikill.Start();
+                button1.BackColor = Color.Orange;
+                tvkill.Start();
+                button2.BackColor = Color.Orange;
+                sckill.Start();
+                button3.BackColor = Color.Orange;
+                jmekill.Start();
+                button5.BackColor = Color.Orange;
+                zakill.Start();
+                button6.BackColor = Color.Orange;
+                splashkill.Start();
+                button7.BackColor = Color.Orange;
+                bomgarkill.Start();
+                button4.BackColor = Color.Orange;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error initializing: " + Environment.NewLine + ex.ToString());
+            }
+            
         }
         private void lmi()
         {
-            do
+            try
             {
-                tkill(@"LMI_Rescue.exe,LMI_RescueRC.exe");
-                Thread.Sleep(3000);
-            } while (1 == 1);
+                do
+                {
+                    tkill(@"LMI_Rescue.exe,LMI_RescueRC.exe");
+                    Thread.Sleep(3000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+           
         }
         private void tv()
         {
-            do
+            try
             {
-                tkill(@"TeamViewer.exe,TeamViewer_Desktop.exe");
-                Thread.Sleep(3000);
-            } while (1 == 1);
+                do
+                {
+                    tkill(@"TeamViewer.exe,TeamViewer_Desktop.exe");
+                    Thread.Sleep(3000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+            
         }
         private void SC()
         {
-            do
+            try
             {
-                tkill(@"ScreenConnect.WindowsClient.exe,ScreenConnect.ClientService.exe");
-                Thread.Sleep(3000);
-            } while (1 == 1);
+                do
+                {
+                    tkill(@"ScreenConnect.WindowsClient.exe,ScreenConnect.ClientService.exe");
+                    Thread.Sleep(3000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+            
         }
         private void jme()
         {
-            do
+            try
             {
-                tkill(@"join.me.exe,join.me.installer.exe,LMISupportM32.exe");
-                Thread.Sleep(3000);
-            } while (1 == 1);
+                do
+                {
+                    tkill(@"join.me.exe,join.me.installer.exe,LMISupportM32.exe");
+                    Thread.Sleep(3000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+            
         }
         private void za()
         {
-            do
+            try
             {
-                tkill(@"agent.exe,agent.exe");
-                Thread.Sleep(3000);
-            } while (1 == 1);
+                do
+                {
+                    tkill(@"agent.exe,agent.exe");
+                    Thread.Sleep(3000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+            
         }
         private void splashtop()
         {
-            do
+            try
             {
-                tkill(@"SplashtopSOS.exe,SRServerSOS.exe,SRFeatureSOS.exe,SRManagerSOS.exe");
-                Thread.Sleep(3000);
-            } while (1 == 1);
+                do
+                {
+                    tkill(@"SplashtopSOS.exe,SRServerSOS.exe,SRFeatureSOS.exe,SRManagerSOS.exe");
+                    Thread.Sleep(3000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+           
         }
         private void bomgar()
         {
-            do
+            try
             {
-                tkill(@"bomgar-scc.exe,bomgar*");
-                Thread.Sleep(3000);
-            } while (1 == 1);
+                do
+                {
+                    tkill(@"bomgar-scc.exe,bomgar*");
+                    Thread.Sleep(3000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+            
         }
         private void tkill(string names)
         {
-            foreach (string name in names.Split(','))
+            try
             {
-                Process proc = new Process();
-                proc.StartInfo.FileName = @"C:\Windows\System32\taskkill.exe";
-                proc.StartInfo.Arguments = @"/f /im " + name;
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                proc.StartInfo.CreateNoWindow = true;
-                proc.Start();
+                foreach (string name in names.Split(','))
+                {
+                    Process proc = new Process();
+                    proc.StartInfo.FileName = @"C:\Windows\System32\taskkill.exe";
+                    proc.StartInfo.Arguments = @"/f /im " + name;
+                    proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    proc.StartInfo.CreateNoWindow = true;
+                    proc.Start();
+                }
+            }catch
+            {
+
             }
+            
         }
         private void inet()
         {
-            do
+            try
             {
-                Process proc = new Process();
-                proc.StartInfo.FileName = @"C:\Windows\System32\ipconfig.exe";
-                proc.StartInfo.Arguments = @"/release";
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                proc.StartInfo.CreateNoWindow = true;
-                proc.Start();
-                Thread.Sleep(1000);
-            } while (1 == 1);
+                do
+                {
+                    Process proc = new Process();
+                    proc.StartInfo.FileName = @"C:\Windows\System32\ipconfig.exe";
+                    proc.StartInfo.Arguments = @"/release";
+                    proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    proc.StartInfo.CreateNoWindow = true;
+                    proc.Start();
+                    Thread.Sleep(1000);
+                } while (1 == 1);
+            }
+            catch
+            {
+
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (button1.BackColor == Color.Orange)
+            try
             {
-                lmikill.Abort();
-                button1.BackColor = Color.Green;
-                button1.Text = "LogMeIn Rescue" + Environment.NewLine + "(Enabled)";
-            }else
-            {
-                lmikill = new Thread(lmi);
-                lmikill.Start();
-                button1.BackColor = Color.Orange;
-                button1.Text = "LogMeIn Rescue" + Environment.NewLine + "(Disabled)";
+                if (button1.BackColor == Color.Orange)
+                {
+                    lmikill.Abort();
+                    button1.BackColor = Color.Green;
+                    button1.Text = "LogMeIn Rescue" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    lmikill = new Thread(lmi);
+                    lmikill.Start();
+                    button1.BackColor = Color.Orange;
+                    button1.Text = "LogMeIn Rescue" + Environment.NewLine + "(Disabled)";
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (button2.BackColor == Color.Orange)
+            try
             {
-                tvkill.Abort();
-                button2.BackColor = Color.Green;
-                button2.Text = "TeamViewer" + Environment.NewLine + "(Enabled)";
+                if (button2.BackColor == Color.Orange)
+                {
+                    tvkill.Abort();
+                    button2.BackColor = Color.Green;
+                    button2.Text = "TeamViewer" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    tvkill = new Thread(tv);
+                    tvkill.Start();
+                    button2.BackColor = Color.Orange;
+                    button2.Text = "TeamViewer" + Environment.NewLine + "(Disabled)";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                tvkill = new Thread(tv);
-                tvkill.Start();
-                button2.BackColor = Color.Orange;
-                button2.Text = "TeamViewer" + Environment.NewLine + "(Disabled)";
+                MessageBox.Show(ex.ToString());
             }
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            if (button3.BackColor == Color.Orange)
+            try
             {
-                sckill.Abort();
-                button3.BackColor = Color.Green;
-                button3.Text = "ScreenConnect" + Environment.NewLine + "(Enabled)";
+                if (button3.BackColor == Color.Orange)
+                {
+                    sckill.Abort();
+                    button3.BackColor = Color.Green;
+                    button3.Text = "ScreenConnect" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    sckill = new Thread(SC);
+                    sckill.Start();
+                    button3.BackColor = Color.Orange;
+                    button3.Text = "ScreenConnect" + Environment.NewLine + "(Disabled)";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                sckill = new Thread(SC);
-                sckill.Start();
-                button3.BackColor = Color.Orange;
-                button3.Text = "ScreenConnect" + Environment.NewLine + "(Disabled)";
+                MessageBox.Show(ex.ToString());
             }
+            
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (button5.BackColor == Color.Orange)
+            try
             {
-                jmekill.Abort();
-                button5.BackColor = Color.Green;
-                button5.Text = "Join.Me" + Environment.NewLine + "(Enabled)";
+                if (button5.BackColor == Color.Orange)
+                {
+                    jmekill.Abort();
+                    button5.BackColor = Color.Green;
+                    button5.Text = "Join.Me" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    jmekill = new Thread(jme);
+                    jmekill.Start();
+                    button5.BackColor = Color.Orange;
+                    button5.Text = "Join.Me" + Environment.NewLine + "(Disabled)";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                jmekill = new Thread(jme);
-                jmekill.Start();
-                button5.BackColor = Color.Orange;
-                button5.Text = "Join.Me" + Environment.NewLine + "(Disabled)";
+                MessageBox.Show(ex.ToString());
             }
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (button4.BackColor == Color.Orange)
+            try
             {
-                bomgarkill.Abort();
-                button4.BackColor = Color.Green;
-                button4.Text = "Bomgar" + Environment.NewLine + "(Enabled)";
+                if (button4.BackColor == Color.Orange)
+                {
+                    bomgarkill.Abort();
+                    button4.BackColor = Color.Green;
+                    button4.Text = "Bomgar" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    bomgarkill = new Thread(bomgar);
+                    bomgarkill.Start();
+                    button4.BackColor = Color.Orange;
+                    button4.Text = "Bomgar" + Environment.NewLine + "(Disabled)";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                bomgarkill = new Thread(bomgar);
-                bomgarkill.Start();
-                button4.BackColor = Color.Orange;
-                button4.Text = "Bomgar" + Environment.NewLine + "(Disabled)";
+                MessageBox.Show(ex.ToString());
             }
+            
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            if (button6.BackColor == Color.Orange)
+            try
             {
-                zakill.Abort();
-                button6.BackColor = Color.Green;
-                button6.Text = "Zoho Assist" + Environment.NewLine + "(Enabled)";
+                if (button6.BackColor == Color.Orange)
+                {
+                    zakill.Abort();
+                    button6.BackColor = Color.Green;
+                    button6.Text = "Zoho Assist" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    zakill = new Thread(za);
+                    zakill.Start();
+                    button6.BackColor = Color.Orange;
+                    button6.Text = "Zoho Assist" + Environment.NewLine + "(Disabled)";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                zakill = new Thread(za);
-                zakill.Start();
-                button6.BackColor = Color.Orange;
-                button6.Text = "Zoho Assist" + Environment.NewLine + "(Disabled)";
+                MessageBox.Show(ex.ToString());
             }
+            
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            if (button7.BackColor == Color.Orange)
+            try
             {
-                splashkill.Abort();
-                button7.BackColor = Color.Green;
-                button7.Text = "Splashtop" + Environment.NewLine + "(Enabled)";
+                if (button7.BackColor == Color.Orange)
+                {
+                    splashkill.Abort();
+                    button7.BackColor = Color.Green;
+                    button7.Text = "Splashtop" + Environment.NewLine + "(Enabled)";
+                }
+                else
+                {
+                    splashkill = new Thread(za);
+                    splashkill.Start();
+                    button7.BackColor = Color.Orange;
+                    button7.Text = "Splashtop" + Environment.NewLine + "(Disabled)";
+                }
             }
-            else
+            catch (Exception ex)
             {
-                splashkill = new Thread(za);
-                splashkill.Start();
-                button7.BackColor = Color.Orange;
-                button7.Text = "Splashtop" + Environment.NewLine + "(Disabled)";
+                MessageBox.Show(ex.ToString());
             }
+            
         }
 
         private void button8_Click(object sender, EventArgs e)
         {
-            if (button8.BackColor == Color.Red)
-            {
-                inetkill = new Thread(inet);
-                inetkill.Start();
-                button8.BackColor = Color.Green;
-                button8.Text = "Enable Internet";
-            }else
-            {
-                inetkill.Abort();
-                button8.BackColor = Color.Red;
-                button8.Text = "Drastic - Disable Internet";
-                Process proc = new Process();
-                proc.StartInfo.FileName = @"C:\Windows\System32\ipconfig.exe";
-                proc.StartInfo.Arguments = @"/renew";
-                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-                proc.StartInfo.CreateNoWindow = true;
-                proc.Start();
+            try {
+                if (button8.BackColor == Color.Red)
+                {
+                    inetkill = new Thread(inet);
+                    inetkill.Start();
+                    button8.BackColor = Color.Green;
+                    button8.Text = "Enable Internet";
+                }
+                else
+                {
+                    inetkill.Abort();
+                    button8.BackColor = Color.Red;
+                    button8.Text = "Drastic - Disable Internet";
+                    Process proc = new Process();
+                    proc.StartInfo.FileName = @"C:\Windows\System32\ipconfig.exe";
+                    proc.StartInfo.Arguments = @"/renew";
+                    proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                    proc.StartInfo.CreateNoWindow = true;
+                    proc.Start();
+                }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
 
         private void button9_Click(object sender, EventArgs e)
         {
-            exit.Visible = true;
-            exitProcedure();
+            try
+            {
+                exit.Visible = true;
+                exitProcedure();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
         private void exitProcedure()
         {
-            count = new Thread(countdown);
-            count.Start();
+            try
+            {
+                count = new Thread(countdown);
+                count.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
         private void countdown()
         {
-            int elapsed_time = 0;
-
-            do
+            try
             {
-                if (label4.InvokeRequired)
+                int elapsed_time = 0;
+
+                do
                 {
-                    label4.BeginInvoke((MethodInvoker)delegate ()
+                    if (label4.InvokeRequired)
+                    {
+                        label4.BeginInvoke((MethodInvoker)delegate ()
+                        {
+                            label4.Text = (20 - elapsed_time).ToString();
+                        });
+                    }
+                    else
                     {
                         label4.Text = (20 - elapsed_time).ToString();
-                    });
-                }
-                else
-                {
-                    label4.Text = (20 - elapsed_time).ToString();
-                }
+                    }
 
-                Thread.Sleep(1000);
-                elapsed_time++;
-            } while(elapsed_time <= 20);
+                    Thread.Sleep(1000);
+                    elapsed_time++;
+                } while (elapsed_time <= 20);
 
-            Environment.Exit(0);
+                Environment.Exit(0);
+                this.Close();
+                Application.Exit();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            count.Abort();
-            exit.Visible = false;
+            try
+            {
+                count.Abort();
+                exit.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
     }
 }

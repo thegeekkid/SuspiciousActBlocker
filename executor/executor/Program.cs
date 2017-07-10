@@ -124,18 +124,36 @@ namespace executor
         }
         static string sha256(string input)
         {
-            System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
-            System.Text.StringBuilder hash = new System.Text.StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input), 0, Encoding.UTF8.GetByteCount(input));
-            foreach (byte theByte in crypto)
+            try
             {
-                hash.Append(theByte.ToString("x2"));
+                System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
+                System.Text.StringBuilder hash = new System.Text.StringBuilder();
+                byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input), 0, Encoding.UTF8.GetByteCount(input));
+                foreach (byte theByte in crypto)
+                {
+                    hash.Append(theByte.ToString("x2"));
+                }
+                return hash.ToString();
             }
-            return hash.ToString();
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error while hashing input: " + ex.ToString());
+                return "";
+            }
+            
         }
         private static string get_setting(string name)
         {
-            return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
+            try
+            {
+                return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error getting " + name + " setting: " + ex.ToString());
+                return "";
+            }
+            
         }
     }
 }

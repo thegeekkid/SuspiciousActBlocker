@@ -21,201 +21,283 @@ namespace SuspiciousActBlocker
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            vars.target_name = Process.GetCurrentProcess().MainModule.FileName;
-            vars.args = "";
-            foreach (string arg in Environment.GetCommandLineArgs())
+            try
             {
-                if (arg != vars.target_name)
+                vars.target_name = Process.GetCurrentProcess().MainModule.FileName;
+                vars.args = "";
+                foreach (string arg in Environment.GetCommandLineArgs())
                 {
-                    if (vars.args != "")
+                    if (arg != vars.target_name)
                     {
-                        vars.args += " ";
+                        if (vars.args != "")
+                        {
+                            vars.args += " ";
+                        }
+                        vars.args += arg;
                     }
-                    vars.args += arg;
-                }
-                
-            }
-            load_settings();
 
-            if (vars.install_type == "msp")
-            {
-                if (vars.logo != "")
+                }
+                load_settings();
+
+                if (vars.install_type == "msp")
                 {
-                    if (File.Exists(vars.install_location + vars.logo)) {
-                        //label1.Location = new Point(218, 219);
-                        label2.Location = new Point(9, 253);
-                        pictureBox1.Image = Image.FromFile(vars.install_location + vars.logo);
+                    if (vars.logo != "")
+                    {
+                        if (File.Exists(vars.install_location + vars.logo))
+                        {
+                            //label1.Location = new Point(218, 219);
+                            label2.Location = new Point(9, 253);
+                            pictureBox1.Image = Image.FromFile(vars.install_location + vars.logo);
+                        }
                     }
-                }
 
-                label2.Text = label2.Text.Replace(@"%company%", vars.company).Replace(@"%contactInfo%", vars.contactInfo);
+                    label2.Text = label2.Text.Replace(@"%company%", vars.company).Replace(@"%contactInfo%", vars.contactInfo);
 
-                if (vars.website != "")
-                {
-                    button1.Text = button1.Text.Replace(@"%company%", vars.company);
+                    if (vars.website != "")
+                    {
+                        button1.Text = button1.Text.Replace(@"%company%", vars.company);
+                    }
+                    else
+                    {
+                        button1.Visible = false;
+                    }
+
+                    if (vars.remoteSite != "")
+                    {
+                        button2.Text = button2.Text.Replace(@"%company%", vars.company);
+                    }
+                    else
+                    {
+                        button2.Visible = false;
+                    }
+
+                    if (vars.passHash == "")
+                    {
+                        textBox1.Visible = false;
+                        label3.Visible = false;
+                        button4.Visible = true;
+                    }
+                    if (vars.lockdown_enabled == "False")
+                    {
+                        button5.Visible = false;
+                    }
                 }
                 else
-                {
-                    button1.Visible = false;
-                }
-
-                if (vars.remoteSite != "")
-                {
-                    button2.Text = button2.Text.Replace(@"%company%", vars.company);
-                }
-                else
-                {
-                    button2.Visible = false;
-                }
-
-                if (vars.passHash == "")
                 {
                     textBox1.Visible = false;
                     label3.Visible = false;
                     button4.Visible = true;
+                    button1.Visible = false;
+                    button2.Visible = false;
+                    button4.Location = new Point(546, 452);
+                    label2.Text = "This program is commonly used by telephone scammers in order to trick people into giving them money." + Environment.NewLine +
+    "If you were called out of the blue, then this is most likely a scam - please hang up." + Environment.NewLine +
+    @"If you are already connected to them, please click the ""Lockdown remote sessions"" button until you can uninstall" + Environment.NewLine +
+    "the remote software.";
                 }
-                if (vars.lockdown_enabled == "False")
-                {
-                    button5.Visible = false;
-                }
-            }else
-            {
-                textBox1.Visible = false;
-                label3.Visible = false;
-                button4.Visible = true;
-                button1.Visible = false;
-                button2.Visible = false;
-                button4.Location = new Point(546, 452);
-                label2.Text = "This program is commonly used by telephone scammers in order to trick people into giving them money." + Environment.NewLine +
-"If you were called out of the blue, then this is most likely a scam - please hang up." + Environment.NewLine +
-@"If you are already connected to them, please click the ""Lockdown remote sessions"" button until you can uninstall" + Environment.NewLine +
-"the remote software.";
             }
-            
-            
+            catch (Exception ex)
+            {
+                MessageBox.Show("Warning!  This program is commonly used by telephone scammers to trick people into giving them money.  Normally we would have an override screen where you could bypass this warning; however, there is a problem with the applicaiton.  Please send this to support for troubleshooting: " + Environment.NewLine + ex.ToString());
+            }
             
         }
 
         private void load_settings()
         {
-            vars.install_type = get_setting("install_type");
-            vars.install_location = get_setting("install_location");
-            vars.company = get_setting("company");
-            vars.logo = get_setting("logo");
-            vars.contactInfo = get_setting("contactInfo").Replace(@"\n", Environment.NewLine);
-            vars.website = get_setting("website");
-            vars.remoteSite = get_setting("remote_site");
-            vars.passHash = get_setting("passHash");
-            vars.lockdown_enabled = get_setting("lockdown_enabled");
+            try
+            {
+                vars.install_type = get_setting("install_type");
+                vars.install_location = get_setting("install_location");
+                vars.company = get_setting("company");
+                vars.logo = get_setting("logo");
+                vars.contactInfo = get_setting("contactInfo").Replace(@"\n", Environment.NewLine);
+                vars.website = get_setting("website");
+                vars.remoteSite = get_setting("remote_site");
+                vars.passHash = get_setting("passHash");
+                vars.lockdown_enabled = get_setting("lockdown_enabled");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Error loading settings.  Please send this information to support: " + Environment.NewLine + ex.ToString());
+            }
         }
 
         private string get_setting(string name)
         {
-            return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
+            try
+            {
+                return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error getting " + name + " setting.  Please send this error to support: " + Environment.NewLine + ex.ToString());
+                return "";
+            }
+            
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            if (textBox1.Text.Count() > 0)
+            try
             {
-                button4.Visible = true;
-            }else
-            {
-                button4.Visible = false;
+                if (textBox1.Text.Count() > 0)
+                {
+                    button4.Visible = true;
+                }
+                else
+                {
+                    button4.Visible = false;
+                }
             }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Process.Start(vars.website);
+            try
+            {
+                Process.Start(vars.website);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Sorry - I couldn't load the website.  Please send the following error message to support: " + ex.ToString());
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            Process.Start(vars.remoteSite);
+            try
+            {
+                Process.Start(vars.remoteSite);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Sorry - I couldn't load the website.  Please send the following error message to support: " + ex.ToString());
+            }
+            
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            Environment.Exit(0);
+            try
+            {
+                Environment.Exit(0);
+                this.Close();
+                Application.Exit();
+            }catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            if (vars.passHash == "")
+            try
             {
-                openAnyway();
-            }else
-            {
-                if (sha256(get_setting("s") + textBox1.Text) == vars.passHash)
+                if (vars.passHash == "")
                 {
                     openAnyway();
-                }else
+                }
+                else
                 {
-                    MessageBox.Show("Incorrect password.");
-                    textBox1.Text = "";
-                    button4.Visible = false;
+                    if (sha256(get_setting("s") + textBox1.Text) == vars.passHash)
+                    {
+                        openAnyway();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Incorrect password.");
+                        textBox1.Text = "";
+                        button4.Visible = false;
+                    }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+            
             
         }
 
         private void openAnyway()
         {
-            /*string protected_name = get_setting(vars.target_name);
-            //DirectoryInfo dirinfo = new DirectoryInfo(protected_name);
-            //File.Copy(protected_name, protected_name.Replace(".log", ".exe"));
-            Process proc = new Process();
-            proc.StartInfo.FileName = protected_name; //.Replace(".log", ".exe");
-            if (vars.args != "")
-            {
-                proc.StartInfo.Arguments = vars.args;
-            }
-            proc.Start();
-            //this.Visible = false;
-            //proc.WaitForExit();
-            //File.Delete(protected_name.Replace(".log", ".exe"));
-            this.Close();*/
 
-            Process proc = new Process();
-            proc.StartInfo.FileName = vars.install_location + @"executor.exe";
-            string pw = "";
-            if (textBox1.Text == "")
+            try
             {
-                pw = "na";
-            }else
-            {
-                pw = textBox1.Text;
+                Process proc = new Process();
+                proc.StartInfo.FileName = vars.install_location + @"executor.exe";
+                string pw = "";
+                if (textBox1.Text == "")
+                {
+                    pw = "na";
+                }
+                else
+                {
+                    pw = textBox1.Text;
+                }
+                proc.StartInfo.Arguments = @"""" + pw + @""" """ + vars.target_name + @"""";
+                if (vars.args != "")
+                {
+                    proc.StartInfo.Arguments += @" """ + vars.args + @"""";
+                }
+                proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                proc.StartInfo.CreateNoWindow = true;
+                //MessageBox.Show(proc.StartInfo.Arguments);
+                proc.Start();
+                Environment.Exit(0);
+                this.Close();
+                Application.Exit();
             }
-            proc.StartInfo.Arguments = @"""" + pw + @""" """ + vars.target_name + @"""";
-            if (vars.args != "")
+            catch (Exception ex)
             {
-                proc.StartInfo.Arguments += @" """ + vars.args + @"""";
+                MessageBox.Show("Error overriding: " + Environment.NewLine + ex.ToString());
             }
-            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            proc.StartInfo.CreateNoWindow = true;
-            //MessageBox.Show(proc.StartInfo.Arguments);
-            proc.Start();
-            Environment.Exit(0);
+            
         }
 
         static string sha256(string input)
         {
-            System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
-            System.Text.StringBuilder hash = new System.Text.StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input), 0, Encoding.UTF8.GetByteCount(input));
-            foreach (byte theByte in crypto)
+            try
             {
-                hash.Append(theByte.ToString("x2"));
+                System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
+                System.Text.StringBuilder hash = new System.Text.StringBuilder();
+                byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(input), 0, Encoding.UTF8.GetByteCount(input));
+                foreach (byte theByte in crypto)
+                {
+                    hash.Append(theByte.ToString("x2"));
+                }
+                return hash.ToString();
             }
-            return hash.ToString();
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error hashing input." + Environment.NewLine + ex.ToString());
+                return "";
+            }
+            
+            
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            lockdown ld = new lockdown();
-            this.Visible = false;
-            ld.ShowDialog();
+            try
+            {
+                lockdown ld = new lockdown();
+                this.Visible = false;
+                ld.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error entering lockdown: " + Environment.NewLine + ex.ToString());
+            }
+            
         }
     }
 

@@ -23,12 +23,19 @@ namespace SuspiciousActBlocker
         {
             try
             {
+                // Get the name of the executable they were trying to run (since we use the same exe for everything and the name is dynamic).
                 vars.target_name = Process.GetCurrentProcess().MainModule.FileName;
+
+                // Placeholder for the arguments that this was started with - we will pass those along if an override happens.
                 vars.args = "";
+
+                // Load each argument into the placeholder.
                 foreach (string arg in Environment.GetCommandLineArgs())
                 {
+                    // The first argument tends to be the executable name - just skip that one.
                     if (arg != vars.target_name)
                     {
+                        // Add a space to our placeholder if it isn't the first argument in there.
                         if (vars.args != "")
                         {
                             vars.args += " ";
@@ -37,22 +44,28 @@ namespace SuspiciousActBlocker
                     }
 
                 }
+
+                // Call function to load settings from the registry into the vars class.
                 load_settings();
 
+                // If we are a branded install, load the branding.
                 if (vars.install_type == "msp")
                 {
                     if (vars.logo != "")
                     {
                         if (File.Exists(vars.install_location + vars.logo))
                         {
-                            //label1.Location = new Point(218, 219);
+                            // Reposition the label so it isn't over/under the logo.
                             label2.Location = new Point(9, 253);
+                            // Load the logo into the picturebox.
                             pictureBox1.Image = Image.FromFile(vars.install_location + vars.logo);
                         }
                     }
 
+                    // Replace variables.
                     label2.Text = label2.Text.Replace(@"%company%", vars.company).Replace(@"%contactInfo%", vars.contactInfo);
 
+                    // Check if they specified a website - otherwise just hide the button.
                     if (vars.website != "")
                     {
                         button1.Text = button1.Text.Replace(@"%company%", vars.company);
@@ -62,6 +75,7 @@ namespace SuspiciousActBlocker
                         button1.Visible = false;
                     }
 
+                    // Same with their remote support site.
                     if (vars.remoteSite != "")
                     {
                         button2.Text = button2.Text.Replace(@"%company%", vars.company);
@@ -71,8 +85,11 @@ namespace SuspiciousActBlocker
                         button2.Visible = false;
                     }
 
+
+                    // Check if there is a password hash.
                     if (vars.passHash == "")
                     {
+                        // If not, no need to show the things related to the password or say that someone has a password.  Talk about confusing!
                         textBox1.Visible = false;
                         label3.Visible = false;
                         button4.Visible = true;
@@ -83,11 +100,13 @@ namespace SuspiciousActBlocker
                     }
                     if (vars.lockdown_enabled == "False")
                     {
+                        // Hide the lockdown option if the installer didn't want that.
                         button5.Visible = false;
                     }
                 }
                 else
                 {
+                    // Not branded, change the form accordingly.
                     textBox1.Visible = false;
                     label3.Visible = false;
                     button4.Visible = true;
@@ -102,15 +121,18 @@ namespace SuspiciousActBlocker
             }
             catch (Exception ex)
             {
+                // Herp derp - show a error.
                 MessageBox.Show("Warning!  This program is commonly used by telephone scammers to trick people into giving them money.  Normally we would have an override screen where you could bypass this warning; however, there is a problem with the applicaiton.  Please send this to support for troubleshooting: " + Environment.NewLine + ex.ToString());
             }
             
         }
 
+        // Load the settings from the registry into the vars class.
         private void load_settings()
         {
             try
             {
+                // Yes - I'm lazy and use a function instead of writing out the same subkey structure over and over again.
                 vars.install_type = get_setting("install_type");
                 vars.install_location = get_setting("install_location");
                 vars.company = get_setting("company");
@@ -127,37 +149,46 @@ namespace SuspiciousActBlocker
             }
         }
 
+
+        // Triggered when the user has successfully authenticated or if there is no password and the user clicked continue.
         private void openAnyway()
         {
-
             try
             {
+                // We need an external exe to run this so we can close out and not get an "in use" warning.
                 Process proc = new Process();
                 proc.StartInfo.FileName = vars.install_location + @"executor.exe";
                 string pw = "";
                 if (textBox1.Text == "")
                 {
+                    // Bogus placeholder - this isn't evaled if the hash is empty anyway.
                     pw = "na";
                 }
                 else
                 {
+                    // Placeholder for the plaintext password.  May re-do this later for security.  (Lol - ya... riiiigggghhhhhttttttttttt)
                     pw = textBox1.Text;
                 }
+
+                // Just pass auth, target, and arguments to the executor app.
                 proc.StartInfo.Arguments = @"""" + pw + @""" """ + vars.target_name + @"""";
                 if (vars.args != "")
                 {
                     proc.StartInfo.Arguments += @" """ + vars.args + @"""";
                 }
+
+                // No need to show it.  Just shows debug info anyway.
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.StartInfo.CreateNoWindow = true;
-                //MessageBox.Show(proc.StartInfo.Arguments);
                 proc.Start();
+                // Bye for now!
                 Environment.Exit(0);
                 this.Close();
                 Application.Exit();
             }
             catch (Exception ex)
             {
+                // ooooopppppsssss....
                 MessageBox.Show("Error overriding: " + Environment.NewLine + ex.ToString());
             }
 

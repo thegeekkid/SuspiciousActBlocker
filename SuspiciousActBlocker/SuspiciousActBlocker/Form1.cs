@@ -23,12 +23,19 @@ namespace SuspiciousActBlocker
         {
             try
             {
+                // Get the name of the executable they were trying to run (since we use the same exe for everything and the name is dynamic).
                 vars.target_name = Process.GetCurrentProcess().MainModule.FileName;
+
+                // Placeholder for the arguments that this was started with - we will pass those along if an override happens.
                 vars.args = "";
+
+                // Load each argument into the placeholder.
                 foreach (string arg in Environment.GetCommandLineArgs())
                 {
+                    // The first argument tends to be the executable name - just skip that one.
                     if (arg != vars.target_name)
                     {
+                        // Add a space to our placeholder if it isn't the first argument in there.
                         if (vars.args != "")
                         {
                             vars.args += " ";
@@ -37,22 +44,28 @@ namespace SuspiciousActBlocker
                     }
 
                 }
+
+                // Call function to load settings from the registry into the vars class.
                 load_settings();
 
+                // If we are a branded install, load the branding.
                 if (vars.install_type == "msp")
                 {
                     if (vars.logo != "")
                     {
                         if (File.Exists(vars.install_location + vars.logo))
                         {
-                            //label1.Location = new Point(218, 219);
+                            // Reposition the label so it isn't over/under the logo.
                             label2.Location = new Point(9, 253);
+                            // Load the logo into the picturebox.
                             pictureBox1.Image = Image.FromFile(vars.install_location + vars.logo);
                         }
                     }
 
+                    // Replace variables.
                     label2.Text = label2.Text.Replace(@"%company%", vars.company).Replace(@"%contactInfo%", vars.contactInfo);
 
+                    // Check if they specified a website - otherwise just hide the button.
                     if (vars.website != "")
                     {
                         button1.Text = button1.Text.Replace(@"%company%", vars.company);
@@ -62,6 +75,7 @@ namespace SuspiciousActBlocker
                         button1.Visible = false;
                     }
 
+                    // Same with their remote support site.
                     if (vars.remoteSite != "")
                     {
                         button2.Text = button2.Text.Replace(@"%company%", vars.company);
@@ -71,8 +85,11 @@ namespace SuspiciousActBlocker
                         button2.Visible = false;
                     }
 
+
+                    // Check if there is a password hash.
                     if (vars.passHash == "")
                     {
+                        // If not, no need to show the things related to the password or say that someone has a password.  Talk about confusing!
                         textBox1.Visible = false;
                         label3.Visible = false;
                         button4.Visible = true;
@@ -83,11 +100,13 @@ namespace SuspiciousActBlocker
                     }
                     if (vars.lockdown_enabled == "False")
                     {
+                        // Hide the lockdown option if the installer didn't want that.
                         button5.Visible = false;
                     }
                 }
                 else
                 {
+                    // Not branded, change the form accordingly.
                     textBox1.Visible = false;
                     label3.Visible = false;
                     button4.Visible = true;
@@ -102,15 +121,18 @@ namespace SuspiciousActBlocker
             }
             catch (Exception ex)
             {
+                // Herp derp - show a error.
                 MessageBox.Show("Warning!  This program is commonly used by telephone scammers to trick people into giving them money.  Normally we would have an override screen where you could bypass this warning; however, there is a problem with the applicaiton.  Please send this to support for troubleshooting: " + Environment.NewLine + ex.ToString());
             }
             
         }
 
+        // Load the settings from the registry into the vars class.
         private void load_settings()
         {
             try
             {
+                // Yes - I'm lazy and use a function instead of writing out the same subkey structure over and over again.
                 vars.install_type = get_setting("install_type");
                 vars.install_location = get_setting("install_location");
                 vars.company = get_setting("company");
@@ -127,37 +149,46 @@ namespace SuspiciousActBlocker
             }
         }
 
+
+        // Triggered when the user has successfully authenticated or if there is no password and the user clicked continue.
         private void openAnyway()
         {
-
             try
             {
+                // We need an external exe to run this so we can close out and not get an "in use" warning.
                 Process proc = new Process();
                 proc.StartInfo.FileName = vars.install_location + @"executor.exe";
                 string pw = "";
                 if (textBox1.Text == "")
                 {
+                    // Bogus placeholder - this isn't evaled if the hash is empty anyway.
                     pw = "na";
                 }
                 else
                 {
+                    // Placeholder for the plaintext password.  May re-do this later for security.  (Lol - ya... riiiigggghhhhhttttttttttt)
                     pw = textBox1.Text;
                 }
+
+                // Just pass auth, target, and arguments to the executor app.
                 proc.StartInfo.Arguments = @"""" + pw + @""" """ + vars.target_name + @"""";
                 if (vars.args != "")
                 {
                     proc.StartInfo.Arguments += @" """ + vars.args + @"""";
                 }
+
+                // No need to show it.  Just shows debug info anyway.
                 proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
                 proc.StartInfo.CreateNoWindow = true;
-                //MessageBox.Show(proc.StartInfo.Arguments);
                 proc.Start();
+                // Bye for now!
                 Environment.Exit(0);
                 this.Close();
                 Application.Exit();
             }
             catch (Exception ex)
             {
+                // ooooopppppsssss....
                 MessageBox.Show("Error overriding: " + Environment.NewLine + ex.ToString());
             }
 
@@ -167,6 +198,7 @@ namespace SuspiciousActBlocker
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            // If there is text in the password field, show the continue/override button.  If not, hide it.
             try
             {
                 if (textBox1.Text.Count() > 0)
@@ -185,8 +217,10 @@ namespace SuspiciousActBlocker
             
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
+            // Should launch the website specified in branding using the default browser.
             try
             {
                 Process.Start(vars.website);
@@ -200,6 +234,7 @@ namespace SuspiciousActBlocker
 
         private void button2_Click(object sender, EventArgs e)
         {
+            // Should launch the remote support site specified in branding using the default browser.
             try
             {
                 Process.Start(vars.remoteSite);
@@ -213,6 +248,7 @@ namespace SuspiciousActBlocker
 
         private void button3_Click(object sender, EventArgs e)
         {
+            // Closes the application.  Since each one of these methods seems to work a little better depending on the OS, try all three to make sure we close.
             try
             {
                 Environment.Exit(0);
@@ -227,20 +263,26 @@ namespace SuspiciousActBlocker
 
         private void button4_Click(object sender, EventArgs e)
         {
+
             try
             {
+                // Check if there is a password
                 if (vars.passHash == "")
                 {
+                    // There isn't - do the override.
                     openAnyway();
                 }
                 else
                 {
+                    // There is - check if it matches the hash when salted.
                     if (sha256(get_setting("s") + textBox1.Text) == vars.passHash)
                     {
+                        // It does - go ahead.
                         openAnyway();
                     }
                     else
                     {
+                        // It doesn't - alert the user and clear the password field.
                         MessageBox.Show("Incorrect password.");
                         textBox1.Text = "";
                         button4.Visible = false;
@@ -249,6 +291,7 @@ namespace SuspiciousActBlocker
             }
             catch (Exception ex)
             {
+                // That ain't good...
                 MessageBox.Show(ex.ToString());
             }
             
@@ -257,6 +300,7 @@ namespace SuspiciousActBlocker
 
         private void button5_Click(object sender, EventArgs e)
         {
+            // Enter lockdown mode
             try
             {
                 lockdown ld = new lockdown();
@@ -274,6 +318,7 @@ namespace SuspiciousActBlocker
 
         static string sha256(string input)
         {
+            // Return the sha256 hash of the string.  Should salt the string prior to sending it to this function.
             try
             {
                 System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
@@ -296,12 +341,14 @@ namespace SuspiciousActBlocker
 
         private string get_setting(string name)
         {
+            // I'm lazy - this just returns the specified setting name from the registry.  I didn't feel like writing out this subkey progression every time.  ;)
             try
             {
                 return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
             }
             catch (Exception ex)
             {
+                // Maybe permissions?
                 MessageBox.Show("Error getting " + name + " setting.  Please send this error to support: " + Environment.NewLine + ex.ToString());
                 return "";
             }
@@ -313,6 +360,7 @@ namespace SuspiciousActBlocker
 
     public class vars
     {
+        // Just a placeholder class for the variables that we pull from the registry.
         public static string install_type { get; set; }
         public static string install_location { get; set; }
         public static string company { get; set; }

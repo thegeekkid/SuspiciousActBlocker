@@ -13,6 +13,7 @@ namespace SuspiciousActBlocker
 {
     public partial class lockdown : Form
     {
+        // Placeholders for each thread
         public Thread lmikill;
         public Thread tvkill;
         public Thread sckill;
@@ -31,6 +32,7 @@ namespace SuspiciousActBlocker
         {
             try
             {
+                // Initialize each of the threads
                 lmikill = new Thread(lmi);
                 tvkill = new Thread(tv);
                 sckill = new Thread(SC);
@@ -40,6 +42,7 @@ namespace SuspiciousActBlocker
                 bomgarkill = new Thread(bomgar);
                 inetkill = new Thread(inet);
 
+                // Start the default - which is disable all of them.
                 lmikill.Start();
                 button1.BackColor = Color.Orange;
                 tvkill.Start();
@@ -63,6 +66,7 @@ namespace SuspiciousActBlocker
         }
         private void lmi()
         {
+            // Actively disables logmein rescue
             try
             {
                 do
@@ -79,6 +83,7 @@ namespace SuspiciousActBlocker
         }
         private void tv()
         {
+            // Actively disables TeamViewer
             try
             {
                 do
@@ -95,6 +100,7 @@ namespace SuspiciousActBlocker
         }
         private void SC()
         {
+            // Actively disables ScreenConnect
             try
             {
                 do
@@ -111,6 +117,7 @@ namespace SuspiciousActBlocker
         }
         private void jme()
         {
+            // Actively disables Join.Me
             try
             {
                 do
@@ -127,6 +134,7 @@ namespace SuspiciousActBlocker
         }
         private void za()
         {
+            // Actively disables ZohoAssist
             try
             {
                 do
@@ -143,6 +151,7 @@ namespace SuspiciousActBlocker
         }
         private void splashtop()
         {
+            // Actively disables splashtop
             try
             {
                 do
@@ -159,6 +168,7 @@ namespace SuspiciousActBlocker
         }
         private void bomgar()
         {
+            // Actively disables bomgar
             try
             {
                 do
@@ -175,6 +185,7 @@ namespace SuspiciousActBlocker
         }
         private void tkill(string names)
         {
+            // Takes a comma seperated input and runs taskkill against each of the processes
             try
             {
                 foreach (string name in names.Split(','))
@@ -194,6 +205,7 @@ namespace SuspiciousActBlocker
         }
         private void inet()
         {
+            // Actively releases the IP so the computer can't access the internet anymore.
             try
             {
                 do
@@ -216,6 +228,11 @@ namespace SuspiciousActBlocker
 
         private void exitProcedure()
         {
+            /* 
+             *  Makes the user wait 20 seconds in case the scammer isn't using one of the tools we have blocked
+             *  or is using a newer version that isn't supported yet and is trying to close out.  Hopefully that would
+             *  give the user enough time to cancel the close and kill the internet. 
+             */
             try
             {
                 count = new Thread(countdown);
@@ -229,6 +246,7 @@ namespace SuspiciousActBlocker
         }
         private void countdown()
         {
+            // Actual countdown timer thread - waits 20 seconds (while updating the GUI), then closes the application.
             try
             {
                 int elapsed_time = 0;
@@ -264,6 +282,7 @@ namespace SuspiciousActBlocker
 
         private void button1_Click(object sender, EventArgs e)
         {
+            // Stops or starts blocking LogMeIn Rescue
             try
             {
                 if (button1.BackColor == Color.Orange)
@@ -289,6 +308,7 @@ namespace SuspiciousActBlocker
 
         private void button2_Click(object sender, EventArgs e)
         {
+            // Stops or starts blocking TeamViewer
             try
             {
                 if (button2.BackColor == Color.Orange)
@@ -314,6 +334,7 @@ namespace SuspiciousActBlocker
 
         private void button3_Click(object sender, EventArgs e)
         {
+            // Stops or starts blocking ScreenConnect
             try
             {
                 if (button3.BackColor == Color.Orange)
@@ -339,6 +360,7 @@ namespace SuspiciousActBlocker
 
         private void button4_Click(object sender, EventArgs e)
         {
+            // Stops or starts blocking Bomgar
             try
             {
                 if (button4.BackColor == Color.Orange)
@@ -364,6 +386,7 @@ namespace SuspiciousActBlocker
 
         private void button5_Click(object sender, EventArgs e)
         {
+            // Stops or starts blocking Join.Me
             try
             {
                 if (button5.BackColor == Color.Orange)
@@ -389,6 +412,7 @@ namespace SuspiciousActBlocker
 
         private void button6_Click(object sender, EventArgs e)
         {
+            // Stops or starts blocking Zoho Assist
             try
             {
                 if (button6.BackColor == Color.Orange)
@@ -414,6 +438,7 @@ namespace SuspiciousActBlocker
 
         private void button7_Click(object sender, EventArgs e)
         {
+            // Stops or starts blocking Splashtop SOS
             try
             {
                 if (button7.BackColor == Color.Orange)
@@ -439,7 +464,9 @@ namespace SuspiciousActBlocker
 
         private void button8_Click(object sender, EventArgs e)
         {
-            try {
+            // Stops or starts releasing the IP address
+            try
+            {
                 if (button8.BackColor == Color.Red)
                 {
                     inetkill = new Thread(inet);
@@ -469,6 +496,7 @@ namespace SuspiciousActBlocker
 
         private void button9_Click(object sender, EventArgs e)
         {
+            // Starts the exit procedure
             try
             {
                 exit.Visible = true;
@@ -484,6 +512,7 @@ namespace SuspiciousActBlocker
 
         private void button10_Click(object sender, EventArgs e)
         {
+            // Cancels the exit procedure
             try
             {
                 count.Abort();

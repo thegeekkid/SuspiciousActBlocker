@@ -198,6 +198,7 @@ namespace SuspiciousActBlocker
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            // If there is text in the password field, show the continue/override button.  If not, hide it.
             try
             {
                 if (textBox1.Text.Count() > 0)
@@ -216,8 +217,10 @@ namespace SuspiciousActBlocker
             
         }
 
+
         private void button1_Click(object sender, EventArgs e)
         {
+            // Should launch the website specified in branding using the default browser.
             try
             {
                 Process.Start(vars.website);
@@ -231,6 +234,7 @@ namespace SuspiciousActBlocker
 
         private void button2_Click(object sender, EventArgs e)
         {
+            // Should launch the remote support site specified in branding using the default browser.
             try
             {
                 Process.Start(vars.remoteSite);
@@ -244,6 +248,7 @@ namespace SuspiciousActBlocker
 
         private void button3_Click(object sender, EventArgs e)
         {
+            // Closes the application.  Since each one of these methods seems to work a little better depending on the OS, try all three to make sure we close.
             try
             {
                 Environment.Exit(0);
@@ -258,20 +263,26 @@ namespace SuspiciousActBlocker
 
         private void button4_Click(object sender, EventArgs e)
         {
+
             try
             {
+                // Check if there is a password
                 if (vars.passHash == "")
                 {
+                    // There isn't - do the override.
                     openAnyway();
                 }
                 else
                 {
+                    // There is - check if it matches the hash when salted.
                     if (sha256(get_setting("s") + textBox1.Text) == vars.passHash)
                     {
+                        // It does - go ahead.
                         openAnyway();
                     }
                     else
                     {
+                        // It doesn't - alert the user and clear the password field.
                         MessageBox.Show("Incorrect password.");
                         textBox1.Text = "";
                         button4.Visible = false;
@@ -280,6 +291,7 @@ namespace SuspiciousActBlocker
             }
             catch (Exception ex)
             {
+                // That ain't good...
                 MessageBox.Show(ex.ToString());
             }
             
@@ -288,6 +300,7 @@ namespace SuspiciousActBlocker
 
         private void button5_Click(object sender, EventArgs e)
         {
+            // Enter lockdown mode
             try
             {
                 lockdown ld = new lockdown();
@@ -305,6 +318,7 @@ namespace SuspiciousActBlocker
 
         static string sha256(string input)
         {
+            // Return the sha256 hash of the string.  Should salt the string prior to sending it to this function.
             try
             {
                 System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
@@ -327,12 +341,14 @@ namespace SuspiciousActBlocker
 
         private string get_setting(string name)
         {
+            // I'm lazy - this just returns the specified setting name from the registry.  I didn't feel like writing out this subkey progression every time.  ;)
             try
             {
                 return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();
             }
             catch (Exception ex)
             {
+                // Maybe permissions?
                 MessageBox.Show("Error getting " + name + " setting.  Please send this error to support: " + Environment.NewLine + ex.ToString());
                 return "";
             }
@@ -344,6 +360,7 @@ namespace SuspiciousActBlocker
 
     public class vars
     {
+        // Just a placeholder class for the variables that we pull from the registry.
         public static string install_type { get; set; }
         public static string install_location { get; set; }
         public static string company { get; set; }

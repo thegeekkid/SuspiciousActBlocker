@@ -11,6 +11,12 @@ namespace executor
 {
     class Program
     {
+
+        /* Executor.exe - takes authorization (password), target program, and arguments that the target was started with.
+         * Once it has that information, it authenticates, then renames the protection executable, copies the protected file back and executes
+         * the real file with the specified arguments (if they exist).
+         */
+
         public static string target = "";
         public static string auth = "";
         public static string arguments = "";
@@ -18,6 +24,7 @@ namespace executor
         {
             try
             {
+                // If there are arguments, load them into the variable
                 if (args.Length > 1)
                 {
                     auth = args[0];
@@ -37,9 +44,7 @@ namespace executor
                 }
                 
                 
-                
-
-                //Console.WriteLine("Auth: " + auth);
+                // Debugging information - can be viewed from cmd if executing manually
                 Console.WriteLine("Target: " + target);
                 Console.WriteLine("Arguments: " + arguments);
 
@@ -49,6 +54,7 @@ namespace executor
 
                 try
                 {
+                    // Check if there is a password.  If so - authenticate.
                     string passHash = get_setting("passHash");
                     if (passHash == "")
                     {
@@ -58,6 +64,7 @@ namespace executor
                     {
                         try
                         {
+                            
                             string s = get_setting("s");
                             if (sha256(s + auth) == passHash)
                             {
@@ -65,6 +72,7 @@ namespace executor
                             }
                             else
                             {
+                                // Not authorized - exit specifying an error code.
                                 Environment.Exit(2);
                             }
                         }
@@ -78,6 +86,7 @@ namespace executor
                 }
                 catch (Exception ex2)
                 {
+                    // Permissions maybe?
                     Console.WriteLine("Error while getting passhash: " + ex2.ToString());
                     System.Threading.Thread.Sleep(10000);
                 }
@@ -85,6 +94,7 @@ namespace executor
             }
             catch (Exception ex)
             {
+                // Ya... that probably shouldn't be happening...
                 Console.WriteLine(ex.ToString());
                 System.Threading.Thread.Sleep(10000);
             }
@@ -95,11 +105,19 @@ namespace executor
         {
             try
             {
+                // Find what the random protected name is
                 string protected_name = get_setting(target);
-                Console.WriteLine("Protected name: " + protected_name);
+
+                // Copy the main executable to a .unprotected extension
                 File.Copy(target, target + ".unprotected");
+
+                // Delete the main executable so it doesn't get in the way.
                 File.Delete(target);
+
+                // Copy the protected program back to it's real name
                 File.Copy(protected_name, target);
+
+                // Execute it (with arguments if it has any).
                 Process proc = new Process();
                 proc.StartInfo.FileName = target;
                 if (arguments != "")
@@ -107,8 +125,11 @@ namespace executor
                     proc.StartInfo.Arguments = arguments;
                 }
                 Console.WriteLine("Starting: " + proc.StartInfo.FileName);
-                //Thread.Sleep(10000);
+                
+
                 proc.Start();
+
+                // Wait for it to exit, then re-protect the system.
                 proc.WaitForExit();
                 File.Delete(target);
                 File.Copy(target + ".unprotected", target);
@@ -124,6 +145,7 @@ namespace executor
         }
         static string sha256(string input)
         {
+            // Return the hash of the input string.  Make sure to salt it first.
             try
             {
                 System.Security.Cryptography.SHA256Managed crypt = new System.Security.Cryptography.SHA256Managed();
@@ -144,6 +166,7 @@ namespace executor
         }
         private static string get_setting(string name)
         {
+            // Yep - I'm lazy.  Just pulls settings from the registry.
             try
             {
                 return Registry.LocalMachine.OpenSubKey("SOFTWARE", false).OpenSubKey("Semrau Software Consulting", false).OpenSubKey("SuspiciousActBlocker", false).GetValue(name).ToString();

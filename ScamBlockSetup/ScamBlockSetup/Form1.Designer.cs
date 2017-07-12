@@ -43,6 +43,8 @@
             this.button4 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.branding = new System.Windows.Forms.Panel();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label16 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.richTextBox2 = new System.Windows.Forms.RichTextBox();
             this.button7 = new System.Windows.Forms.Button();
@@ -236,6 +238,8 @@
             // branding
             // 
             this.branding.BackColor = System.Drawing.Color.White;
+            this.branding.Controls.Add(this.label17);
+            this.branding.Controls.Add(this.label16);
             this.branding.Controls.Add(this.checkBox1);
             this.branding.Controls.Add(this.richTextBox2);
             this.branding.Controls.Add(this.button7);
@@ -260,6 +264,24 @@
             this.branding.Size = new System.Drawing.Size(1024, 616);
             this.branding.TabIndex = 6;
             this.branding.Visible = false;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(777, 192);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(132, 13);
+            this.label17.TabIndex = 15;
+            this.label17.Text = "(include http:// or https://)";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(777, 90);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(132, 13);
+            this.label16.TabIndex = 14;
+            this.label16.Text = "(include http:// or https://)";
             // 
             // checkBox1
             // 
@@ -729,12 +751,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 612);
+            this.Controls.Add(this.install_dir);
             this.Controls.Add(this.protected_items);
             this.Controls.Add(this.branding);
             this.Controls.Add(this.welcome);
             this.Controls.Add(this.install_type);
             this.Controls.Add(this.status);
-            this.Controls.Add(this.install_dir);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -822,6 +844,8 @@
         private System.Windows.Forms.Panel xml_export;
         private System.Windows.Forms.Button button13;
         private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.Label label17;
     }
 }
 

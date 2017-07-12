@@ -657,14 +657,17 @@ namespace ScamBlockSetup
         private void button6_Click(object sender, EventArgs e)
         {
             // And here we go (forward)!
-            try
+            if (ValidateBranding())
             {
-                branding.Visible = false;
-                protected_items.Visible = true;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
+                try
+                {
+                    branding.Visible = false;
+                    protected_items.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.ToString());
+                }
             }
 
         }
@@ -869,6 +872,34 @@ namespace ScamBlockSetup
             }
 
         }       
+
+
+        // Just double check the inputs on the branding page.  Stuff *could* go wrong here.
+        private bool ValidateBranding()
+        {
+            // Make sure it's a valid URL - I could just add this for them, but I want to just tripple check that it's valid, and this is the easiest way to double check that.
+            if (!((textBox3.Text.StartsWith("http://")) || (textBox3.Text.StartsWith("https://"))))
+            {
+                MessageBox.Show("Error: Please enter a valid URL for your company website (Starting with http:// or https://).");
+                return false;
+            }
+
+            // Make sure it's a valid URL
+            if (!((textBox4.Text.StartsWith("http://")) || (textBox4.Text.StartsWith("https://"))))
+            {
+                MessageBox.Show("Error: Please enter a valid URL for your remote support page (Starting with http:// or https://).");
+                return false;
+            }
+
+            // Make sure the file exists.  Don't want to trigger this until they click "next" in case they are still working on it when typing in the box or browsing to it.
+            if ((textBox5.Text != "") && (!(File.Exists(textBox5.Text))))
+            {
+                MessageBox.Show("Error: Logo doesn't exist");
+                return false;
+            }
+
+            return true;
+        }
 
         
         // Just a function to generate a random salt.

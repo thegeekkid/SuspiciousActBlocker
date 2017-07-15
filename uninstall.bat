@@ -127,7 +127,7 @@ echo Unprotecting perfmon...
 takeown /f C:\Windows\System32\perfmon.exe
 icacls C:\Windows\System32\perfmon.exe /grant "%username%:F"
 del /q C:\Windows\System32\perfmon.exe
-rename %rmprm% perfmon.exe
+rename %prm% perfmon.exe
 reg add "HKLM\Software\Semrau Software Consulting\SuspiciousActBlocker" /f /v "C:\Windows\System32\perfmon.exe" /t REG_SZ /d "false"
 goto main
 :rmsk

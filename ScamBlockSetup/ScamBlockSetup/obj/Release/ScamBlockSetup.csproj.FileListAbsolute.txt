@@ -1,0 +1,8 @@
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\bin\Release\ScamBlockSetup.exe.config
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\bin\Release\ScamBlockSetup.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\bin\Release\ScamBlockSetup.pdb
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.Form1.resources
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.Properties.Resources.resources
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.csproj.GenerateResource.Cache
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.exe
+C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.pdb

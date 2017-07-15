@@ -11,8 +11,14 @@ All of the programs that Scam Block blocks are optional; however, we always reco
 *  Windows Vista and above
 *  .NET Framework 3.5 and above
 
+## Pre-compiled installer
+A pre-compiled installer can be downloaded from here: [https://downloads.semrauconsulting.com/ScamBlock/ScamBlockSetup.exe](https://downloads.semrauconsulting.com/ScamBlock/ScamBlockSetup.exe)
+
 ## Uninstalling
 Please use the batch file at the root of this repository to uninstall ScamBlock.
 
 ## Contributing
 We love any help we can get.  Contributions are welcome - just follow standard GitHub procedures by forking, branching, testing, then creating a pull request.
+
+## Legal notice
+This software comes with no warranty.  While we do our best to account for issues before they happen, we are not liable if something breaks due to the use of this software.

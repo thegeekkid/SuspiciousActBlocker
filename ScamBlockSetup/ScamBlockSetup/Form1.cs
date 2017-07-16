@@ -885,7 +885,7 @@ namespace ScamBlockSetup
             }
 
             // Make sure it's a valid URL
-            if (!((textBox4.Text.StartsWith("http://")) || (textBox4.Text.StartsWith("https://"))))
+            if (!((textBox1.Text.StartsWith("http://")) || (textBox1.Text.StartsWith("https://"))))
             {
                 MessageBox.Show("Error: Please enter a valid URL for your remote support page (Starting with http:// or https://).");
                 return false;

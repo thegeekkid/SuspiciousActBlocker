@@ -9,12 +9,15 @@ using System.Windows.Forms;
 using Microsoft.Win32;
 using System.IO;
 using System.Diagnostics;
+using System.Net;
+using System.Security.Cryptography;
 
 namespace ForcedUninstall
 {
     public partial class Form1 : Form
     {
         public string IssueHook = @"https://hooks.zapier.com/hooks/catch/2404507/58itwh/";
+        public string definition_server = @"https://downloads.semrauconsulting.com/ScamBlock/uninstall_defs/";
 
 
         public string debug = "";
@@ -39,6 +42,16 @@ namespace ForcedUninstall
         bool remote_site = false;
         bool website = false;
 
+        // Hash definitions
+        string cmd_def = "";
+        string eventvwr_def = "";
+        string mmc_def = "";
+        string msconfig_def = "";
+        string notepad_def = "";
+        string perfmon_def = "";
+        string regedit_def = "";
+        string syskey_def = "";
+
         public Form1()
         {
             InitializeComponent();
@@ -48,6 +61,177 @@ namespace ForcedUninstall
         {
             label2.Visible = checkBox1.Checked;
             richTextBox1.Visible = checkBox1.Checked;
+        }
+
+        private void hash_uninstall()
+        {
+
+            logit("Starting hash based uninstall");
+
+            downloadDefs();
+
+            foreach (string f in Directory.GetFiles(@"C:\Windows\"))
+            {
+                if (f.EndsWith(".log"))
+                {
+                    logit("Checking " + f);
+                    MatchHash(f);
+                }
+            }
+
+            foreach (string f in Directory.GetFiles(@"C:\Windows\System32\"))
+            {
+                if (f.EndsWith(".log"))
+                {
+                    MatchHash(f);
+                }
+            }
+
+
+
+            if (regedit != "")
+            {
+                cleanFile(regedit, @"C:\Windows\regedit.exe");
+            }
+
+            if (cmd != "")
+            {
+                cleanFile(cmd, @"C:\Windows\System32\cmd.exe");
+            }
+
+            if (eventvwr != "")
+            {
+                cleanFile(eventvwr, @"C:\Windows\System32\eventvwr.exe");
+            }
+
+            if (mmc != "")
+            {
+                cleanFile(mmc, @"C:\Windows\System32\mmc.exe");
+            }
+
+            if (msconfig != "")
+            {
+                cleanFile(msconfig, @"C:\Windows\System32\msconfig.exe");
+            }
+
+            if (notepad != "")
+            {
+                cleanFile(notepad, @"C:\Windows\System32\notepad.exe");
+            }
+
+            if (perfmon != "")
+            {
+                cleanFile(perfmon, @"C:\Windows\System32\perfmon.exe");
+            }
+
+            if (syskey != "")
+            {
+                cleanFile(syskey, @"C:\Windows\System32\syskey.exe");
+            }
+
+            if (Directory.Exists(install_location))
+            {
+                try
+                {
+                    logit("Install location exists - clearing and deleting");
+                    Directory.Delete(install_location, true);
+                }
+                catch (Exception ex)
+                {
+                    logit("Permission error on deleting program folder: " + Environment.NewLine + ex.ToString());
+                }
+               
+            }
+
+            Registry.LocalMachine.OpenSubKey("SOFTWARE").OpenSubKey("Semrau Software Consulting", true).DeleteSubKey("SuspiciousActBlocker");
+
+            logit("Deleted registry key");
+
+            if (checkBox1.Checked == true)
+            {
+                submitDebug();
+            }
+
+            MessageBox.Show("Uninstall completed!");
+            Environment.Exit(0);
+            Application.Exit();
+            this.Close();
+        }
+
+        private void downloadDefs()
+        {
+            logit("Downloading Definitions");
+
+            WebClient wc = new WebClient();
+            cmd_def = wc.DownloadString(definition_server + @"cmd_hash.txt");
+            eventvwr_def = wc.DownloadString(definition_server + @"eventvwr.txt");
+            mmc_def = wc.DownloadString(definition_server + @"mmc.txt");
+            msconfig_def = wc.DownloadString(definition_server + @"msconfig.txt");
+            notepad_def = wc.DownloadString(definition_server + @"notepad.txt");
+            perfmon_def = wc.DownloadString(definition_server + @"perfmon.txt");
+            regedit_def = wc.DownloadString(definition_server + @"regedit.txt");
+            syskey_def = wc.DownloadString(definition_server + @"syskey.txt");
+
+            logit("Definitions downloaded.");
+        }
+
+        private void MatchHash(string file)
+        {
+            string hash = GetChecksum(file);
+            logit(file + " hash: " + hash);
+            if (cmd_def.Contains(hash)) {
+                logit(file + " matched to cmd.");
+                cmd = file;
+            }else
+            {
+                if (eventvwr_def.Contains(hash))
+                {
+                    logit(file + " matched to Event Viewer.");
+                    eventvwr = file;
+                }else
+                {
+                    if (mmc_def.Contains(hash))
+                    {
+                        logit(file + " matched to MMC.");
+                        mmc = file;
+                    }else
+                    {
+                        if (msconfig_def.Contains(hash))
+                        {
+                            logit(file + " matched to MsConfig.");
+                            msconfig = file;
+                        }else
+                        {
+                            if (notepad_def.Contains(hash))
+                            {
+                                logit(file + " matched to Notepad.");
+                                notepad = file;
+                            }else
+                            {
+                                if (perfmon_def.Contains(hash))
+                                {
+                                    logit(file + " matched to perfmon.");
+                                    perfmon = file;
+                                }else
+                                {
+                                    if (regedit_def.Contains(hash))
+                                    {
+                                        logit(file + " matched to regedit.");
+                                        regedit = file;
+                                    }else
+                                    {
+                                        if (syskey_def.Contains(hash))
+                                        {
+                                            logit(file + " matched to syskey.");
+                                            syskey = file;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void trad_uninstall()
@@ -97,8 +281,16 @@ namespace ForcedUninstall
 
             if (Directory.Exists(install_location))
             {
-                logit("Install location exists - clearing and deleting");
-                Directory.Delete(install_location, true);
+                try
+                {
+                    logit("Install location exists - clearing and deleting");
+                    Directory.Delete(install_location, true);
+                }
+                catch (Exception ex)
+                {
+                    logit("Permission error on deleting program folder: " + Environment.NewLine + ex.ToString());
+                }
+
             }
 
             Registry.LocalMachine.OpenSubKey("SOFTWARE").OpenSubKey("Semrau Software Consulting", true).DeleteSubKey("SuspiciousActBlocker");
@@ -289,6 +481,22 @@ namespace ForcedUninstall
             if (radioButton1.Checked)
             {
                 trad_uninstall();
+            }else
+            {
+                if (radioButton2.Checked)
+                {
+                    hash_uninstall();
+                }
+            }
+        }
+
+        private static string GetChecksum(string file)
+        {
+            using (FileStream stream = File.OpenRead(file))
+            {
+                var sha = new SHA256Managed();
+                byte[] checksum = sha.ComputeHash(stream);
+                return BitConverter.ToString(checksum).Replace("-", String.Empty).ToUpper();
             }
         }
     }

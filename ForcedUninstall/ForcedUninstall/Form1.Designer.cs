@@ -64,12 +64,11 @@
             // radioButton2
             // 
             this.radioButton2.AutoSize = true;
-            this.radioButton2.Enabled = false;
             this.radioButton2.Location = new System.Drawing.Point(16, 67);
             this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(238, 17);
+            this.radioButton2.Size = new System.Drawing.Size(152, 17);
             this.radioButton2.TabIndex = 2;
-            this.radioButton2.Text = "Option 2 - uninstall by hash (not yet available)";
+            this.radioButton2.Text = "Option 2 - uninstall by hash";
             this.radioButton2.UseVisualStyleBackColor = true;
             // 
             // radioButton3

@@ -7,3 +7,12 @@ C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\bin\Debu
 C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.exe
 C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.pdb
 C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.csprojResolveAssemblyReference.cache
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\bin\Debug\ScamBlockSetup.exe.config
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\bin\Debug\ScamBlockSetup.exe
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\bin\Debug\ScamBlockSetup.pdb
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.csprojResolveAssemblyReference.cache
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.Form1.resources
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.Properties.Resources.resources
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.csproj.GenerateResource.Cache
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.exe
+C:\misc\Repos\SuspiciousBlocker\ScamBlockSetup\ScamBlockSetup\obj\Debug\ScamBlockSetup.pdb

@@ -14,10 +14,11 @@ namespace ForcedUninstall
 {
     public partial class Form1 : Form
     {
+        public string IssueHook = @"https://hooks.zapier.com/hooks/catch/2404507/58itwh/";
+
+
         public string debug = "";
-
-
-
+        
 
         string install_location = "";
         string regedit = "";
@@ -119,7 +120,18 @@ namespace ForcedUninstall
 
         private void submitDebug()
         {
-            File.WriteAllText(Environment.CurrentDirectory + @"\debug.txt", ("Submitted issue: " + Environment.NewLine + richTextBox1.Text + Environment.NewLine + Environment.NewLine + "Debug info: " + Environment.NewLine + Environment.NewLine + debug));
+            string info = ("Submitted issue: " + Environment.NewLine + richTextBox1.Text + Environment.NewLine + Environment.NewLine + "Debug info: " + Environment.NewLine + Environment.NewLine + debug);
+
+            System.Net.WebRequest req = System.Net.WebRequest.Create(IssueHook);
+            req.ContentType = "application/x-www-form-urlencoded";
+            req.Method = "POST";
+            string content2 = "body=" + info;
+            byte[] bytes = System.Text.Encoding.ASCII.GetBytes(content2);
+            req.ContentLength = bytes.Length;
+            System.IO.Stream os = req.GetRequestStream();
+            os.Write(bytes, 0, bytes.Length);
+            os.Close();
+
         }
 
         private void cleanFile(string coded_file, string target)

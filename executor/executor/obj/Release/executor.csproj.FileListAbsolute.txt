@@ -3,3 +3,4 @@ C:\Users\Brian\Repos\SuspiciousActBlocker\Executor\executor\bin\Release\executor
 C:\Users\Brian\Repos\SuspiciousActBlocker\Executor\executor\bin\Release\executor.pdb
 C:\Users\Brian\Repos\SuspiciousActBlocker\Executor\executor\obj\Release\executor.exe
 C:\Users\Brian\Repos\SuspiciousActBlocker\Executor\executor\obj\Release\executor.pdb
+C:\Users\Brian\Repos\SuspiciousActBlocker\executor\executor\obj\Release\executor.csprojResolveAssemblyReference.cache

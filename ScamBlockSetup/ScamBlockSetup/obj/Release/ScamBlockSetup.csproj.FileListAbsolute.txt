@@ -6,4 +6,3 @@ C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Rele
 C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.csproj.GenerateResource.Cache
 C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.exe
 C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.pdb
-C:\Users\Brian\Repos\SuspiciousActBlocker\ScamBlockSetup\ScamBlockSetup\obj\Release\ScamBlockSetup.csprojResolveAssemblyReference.cache

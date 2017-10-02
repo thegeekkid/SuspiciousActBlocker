@@ -101,21 +101,48 @@ namespace executor
            
         }
 
+        private static Random random = new Random();
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
         static void do_open()
         {
             try
             {
+                string rid = RandomString(64);
+
                 // Find what the random protected name is
                 string protected_name = get_setting(target);
 
-                // Copy the main executable to a .unprotected extension
-                File.Copy(target, target + ".unprotected");
+                // Verify that the target is not already unprotected
+                if (!(File.Exists(target + ".unprotected")))
+                {
+                    // Copy the main executable to a .unprotected extension
+                    File.Copy(target, target + ".unprotected");
 
-                // Delete the main executable so it doesn't get in the way.
-                File.Delete(target);
+                    // Delete the main executable so it doesn't get in the way.
+                    File.Delete(target);
 
-                // Copy the protected program back to it's real name
-                File.Copy(protected_name, target);
+                    // Copy the protected program back to it's real name
+                    File.Copy(protected_name, target);
+                }
+
+                string locktxt = "";
+
+                if (File.Exists(target + ".lock"))
+                {
+                    string existing_lock = File.ReadAllText(target + ".lock");
+                    locktxt = existing_lock + rid + ";";
+                }else
+                {
+                    locktxt = rid + ";";
+                }
+
+                File.WriteAllText(target + ".lock", locktxt);
 
                 // Execute it (with arguments if it has any).
                 Process proc = new Process();
@@ -131,9 +158,21 @@ namespace executor
 
                 // Wait for it to exit, then re-protect the system.
                 proc.WaitForExit();
-                File.Delete(target);
-                File.Copy(target + ".unprotected", target);
-                File.Delete(target + ".unprotected");
+                if (File.Exists(target + ".lock"))
+                {
+                    string locks = File.ReadAllText(target + ".lock");
+                    if (locks == rid + ";")
+                    {
+                        File.Delete(target);
+                        File.Copy(target + ".unprotected", target);
+                        File.Delete(target + ".unprotected");
+                    }else
+                    {
+                        locks = locks.Replace(rid + ";", "");
+                        File.WriteAllText(target + ".lock", locks);
+                    }
+                }
+                
                 Environment.Exit(0);
             }
             catch (Exception ex)

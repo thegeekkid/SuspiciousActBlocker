@@ -25,6 +25,8 @@ namespace ScamBlockSetup
         public static int target = 5;
         // Placeholder for loops running on other threads to know when to exit.
         public bool install_Finished = false;
+        // Placeholder to be flipped if the program is already installed
+        public bool already_installed = false;
 
         // Instance of settings that we can use to write to or read from an XML file.
         settings set = new settings();
@@ -39,6 +41,17 @@ namespace ScamBlockSetup
         {
             try
             {
+                if (Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Semrau Software Consulting\SuspiciousActBlocker", "install_type", null) != null)
+                {
+                    already_installed = true;
+                }
+            }catch (Exception ex)
+            {
+                MessageBox.Show("Error checking to see if this was already installed - if it is, do not install it again." + Environment.NewLine + ex.ToString());
+            }
+
+            try
+            {
                 // Set the default install directory.
                 textBox6.Text = @"C:\Program Files\Semrau Software Consulting\Scam Block\";
 
@@ -46,6 +59,15 @@ namespace ScamBlockSetup
                 // If a silent.xml file exists, load the settings into the placeholders and perform the install.
                 if (File.Exists(Environment.CurrentDirectory + @"\silent.xml"))
                 {
+                    // If the program is already installed, silently exit.
+                    if (already_installed)
+                    {
+                        Console.WriteLine("Error - already installed");
+                        Environment.Exit(10);
+                        Application.Exit();
+                        this.Close();
+                    }
+
                     // Read into our settings instance.
                     set = LoadXML(Environment.CurrentDirectory + @"\silent.xml");
 
@@ -100,6 +122,16 @@ namespace ScamBlockSetup
                     Environment.Exit(0);
                     this.Close();
                     Application.Exit();
+                }else
+                {
+                    // If already installed, alert user and exit.
+                    if (already_installed)
+                    {
+                        MessageBox.Show("Error - this program has already been installed.  Attempting to install it a second time can cause major issues.");
+                        Environment.Exit(10);
+                        Application.Exit();
+                        this.Close();
+                    }
                 }
             }
             catch (Exception ex)
